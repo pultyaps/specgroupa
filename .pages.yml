@@ -24,6 +24,10 @@ content:
         label: Кафедра
         type: string
 
+      - name: bio
+        label: Описание
+        type: string
+        
       - name: tags
         label: Научные направления
         type: string
