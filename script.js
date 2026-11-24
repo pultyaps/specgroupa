@@ -1,554 +1,677 @@
-let PEOPLE = [];
-let PROGRAM = [];
-let FAQ = [];
+(function () {
+      'use strict';
 
-async function loadData() {
-  const [peopleRes, programRes, faqRes] = await Promise.all([
-    fetch('data/people.json'),
-    fetch('data/program.json'),
-    fetch('data/faq.json')
-  ]);
-  
-  const peopleData = await peopleRes.json();
-  const programData = await programRes.json();
-  const faqData = await faqRes.json();
-  
-  PEOPLE = peopleData.people;
-  PROGRAM = programData.program;
-  FAQ = faqData.faq.map(item => [item.question, item.answer]);
-  
-  renderPeople();
-  renderFAQ();
-}
+      /* =========================================================================
+         1. СТРУКТУРИРОВАННЫЕ ДАННЫЕ (ЛЕГКО РЕДАКТИРОВАТЬ ПОД ВАШУ ПРОГРАММУ)
+         ========================================================================= */
 
-document.addEventListener('DOMContentLoaded', loadData);
+      
 
-const $ = (s, r = document) => r.querySelector(s);
-const $$ = (s, r = document) => [...r.querySelectorAll(s)];
-const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-const esc = (s) =>
-  String(s).replace(
-    /[&<>"]/g,
-    (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])
-  );
-const initials = (n) =>
-  n
-    .split(' ')
-    .slice(0, 2)
-    .map((w) => w[0])
-    .join('');
-const PALETTE = [
-  ['#0054A5', '#002855'],
-  ['#009CDE', '#0054A5'],
-  ['#4FB3D9', '#0077A8'],
-  ['#003872', '#001A3A'],
-  ['#0077C8', '#004A8C'],
-  ['#00B4E6', '#009CDE'],
-];
-const grad = (i) =>
-  `linear-gradient(140deg,${PALETTE[i % PALETTE.length][0]},${
-    PALETTE[i % PALETTE.length][1]
-  })`;
+      /* =========================================================================
+         2. УТИЛИТЫ: TOAST, МОДАЛЬНЫЕ ОКНА, ЭКРАНИРОВАНИЕ
+         ========================================================================= */
 
-(() => {
-  const words = [
-    'Математический анализ',
-    'Высшая алгебра',
-    'Общая топология',
-    'Функциональный анализ',
-    'Теория вероятностей',
-    'Дифференциальная геометрия',
-    'Спецсеминары',
-    'ТФКП',
-    'Теория представлений',
-    'Листки задач',
-  ];
-  const row = $('#ticker');
-  const html = words.map((w) => `<span>${w}</span>`).join('');
-  row.innerHTML = html + html;
-})();
+      let toastTimer = null;
+      function showToast(message) {
+        const toast = document.getElementById('toast');
+        const toastMsg = document.getElementById('toast-message');
+        if (!toast || !toastMsg) return;
+        toastMsg.textContent = message;
+        toast.classList.remove('translate-y-24', 'opacity-0', 'pointer-events-none');
+        toast.classList.add('translate-y-0', 'opacity-100');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          toast.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
+          toast.classList.remove('translate-y-0', 'opacity-100');
+        }, 3600);
+      }
 
-const peopleEl = $('#people'),
-  filtersEl = $('#filters');
-let activeFilter = 'all',
-  query = '';
+      function openModal(id) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.classList.remove('hidden');
+        el.classList.add('flex');
+        document.body.classList.add('overflow-hidden');
+      }
 
-FILTERS.forEach((f, i) => {
-  const count =
-    f.id === 'all'
-      ? PEOPLE.length
-      : PEOPLE.filter((p) => p.tags.includes(f.id)).length;
-  const b = document.createElement('button');
-  b.className = 'chip' + (i === 0 ? ' is-active' : '');
-  b.dataset.id = f.id;
-  b.innerHTML = `${f.label}<small>${count}</small>`;
-  b.addEventListener('click', () => {
-    activeFilter = f.id;
-    $$('.chip', filtersEl).forEach((c) =>
-      c.classList.toggle('is-active', c === b)
-    );
-    renderPeople();
-  });
-  filtersEl.appendChild(b);
-});
+      function closeModal(id) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.classList.add('hidden');
+        el.classList.remove('flex');
+        // Разблокируем прокрутку, если нет других открытых модалок
+        const anyOpen = document.querySelector('[role="dialog"].flex');
+        if (!anyOpen) {
+          document.body.classList.remove('overflow-hidden');
+        }
+      }
 
-function renderPeople() {
-  const q = query.trim().toLowerCase();
-  const list = PEOPLE.map((p, i) => ({ ...p, i })).filter((p) => {
-    const okF = activeFilter === 'all' || p.tags.includes(activeFilter);
-    const hay = (
-      p.name +
-      ' ' +
-      p.chair +
-      ' ' +
-      p.role +
-      ' ' +
-      p.courses.join(' ') +
-      ' ' +
-      p.interests.join(' ')
-    ).toLowerCase();
-    return okF && (!q || hay.includes(q));
-  });
-  if (!list.length) {
-    peopleEl.innerHTML = `<div class="empty">Никого не нашли. Попробуйте другой запрос или <a href="#contacts" style="color:var(--accent)">напишите нам</a>.</div>`;
-    return;
-  }
-  peopleEl.innerHTML = list
-    .map((p) => {
-      const badges = [];
-      if (p.tags.includes('lead'))
-        badges.push(
-          `<div class="person__badge" title="Руководство"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>`
-        );
-      if (p.tags.includes('cur'))
-        badges.push(
-          `<div class="person__badge" title="Куратор" style="background:var(--accent-2)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>`
-        );
-      return `
-    <button class="person" data-i="${p.i}" aria-label="Подробнее: ${esc(
-        p.name
-      )}">
-      <div class="person__badges">${badges.join('')}</div>
-      <span class="person__num">${String(p.i + 1).padStart(2, '0')}</span>
-      <span class="avatar" style="background:${grad(
-        p.i
-      )}" aria-hidden="true">${initials(p.name)}</span>
-      <span>
-        <span class="person__role">${esc(p.role)}</span>
-        <h3>${esc(p.name)}</h3>
-        <p class="person__deg">${esc(p.degree)}</p>
-      </span>
-      <p class="person__chair">${esc(p.chair)}</p>
-      <span class="person__more">Подробнее <span aria-hidden="true">→</span></span>
-    </button>`;
-    })
-    .join('');
-}
-renderPeople();
-$('#search').addEventListener('input', (e) => {
-  query = e.target.value;
-  renderPeople();
-});
+      function closeAllModals() {
+        ['apply-modal', 'detail-modal', 'search-modal'].forEach(closeModal);
+      }
 
-const modal = $('#modal'),
-  modalContent = $('#modalContent');
-let lastFocus = null;
+      /* =========================================================================
+         3. РЕНДЕР ДОКУМЕНТОВ И ПОЛОЖЕНИЙ
+         ========================================================================= */
 
-peopleEl.addEventListener('click', (e) => {
-  const card = e.target.closest('.person');
-  if (card) openPerson(+card.dataset.i);
-});
-
-function openPerson(i) {
-  const p = PEOPLE[i];
-  lastFocus = document.activeElement;
-  modalContent.innerHTML = `
-    <div class="modal__head">
-      <span class="avatar" style="background:${grad(
-        i
-      )}" aria-hidden="true">${initials(p.name)}</span>
-      <div>
-        <div class="person__role">${esc(p.role)}</div>
-        <h3 id="modalName">${esc(p.name)}</h3>
-        <p class="person__deg">${esc(p.degree)} · ${esc(p.chair)}</p>
-      </div>
-    </div>
-    <div class="modal__body">
-      <h4>О преподавателе</h4>
-      <p>${esc(p.bio)}</p>
-      <h4>Читает курсы</h4>
-      <ul class="m-list">${p.courses
-        .map((c) => `<li>${esc(c)}</li>`)
-        .join('')}</ul>
-      <h4>Научные интересы</h4>
-      <div class="tags">${p.interests
-        .map((t) => `<span class="tag">${esc(t)}</span>`)
-        .join('')}</div>
-      <h4>Контакты</h4>
-      <div class="m-contact">
-        <div><span>Почта</span><a href="mailto:${esc(p.email)}">${esc(
-    p.email
-  )}</a></div>
-        <div><span>Кабинет</span><span style="font-size:14.5px;color:var(--text);text-transform:none;letter-spacing:0;font-family:var(--f-body)">${esc(
-          p.office
-        )}</span></div>
-        <div><span>Консультации</span><span style="font-size:14.5px;color:var(--text);text-transform:none;letter-spacing:0;font-family:var(--f-body)">${esc(
-          p.hours
-        )}</span></div>
-      </div>
-    </div>`;
-  modal.classList.add('is-open');
-  document.body.style.overflow = 'hidden';
-  $('.modal__close', modal).focus();
-}
-function closeModal() {
-  modal.classList.remove('is-open');
-  document.body.style.overflow = '';
-  if (lastFocus) lastFocus.focus();
-}
-modal.addEventListener('click', (e) => {
-  if (e.target.hasAttribute('data-close')) closeModal();
-});
-document.addEventListener('keydown', (e) => {
-  if (!modal.classList.contains('is-open')) return;
-  if (e.key === 'Escape') closeModal();
-  if (e.key === 'Tab') {
-    const f = $$('a[href],button,input,select,textarea', modal).filter(
-      (el) => el.offsetParent !== null
-    );
-    if (!f.length) return;
-    const first = f[0],
-      last = f[f.length - 1];
-    if (e.shiftKey && document.activeElement === first) {
-      e.preventDefault();
-      last.focus();
-    } else if (!e.shiftKey && document.activeElement === last) {
-      e.preventDefault();
-      first.focus();
-    }
-  }
-});
-
-const tabsEl = $('#tabs'),
-  panelsEl = $('#panels');
-let allSemestersHTML = '';
-
-PROGRAM.forEach((c, courseIdx) => {
-  const b = document.createElement('button');
-  b.className = 'tab' + (courseIdx === 0 ? ' is-active' : '');
-  b.setAttribute('role', 'tab');
-  b.setAttribute('aria-selected', courseIdx === 0);
-  b.id = 'tab' + courseIdx;
-  b.setAttribute('aria-controls', 'panel' + courseIdx);
-  b.innerHTML = `${c.title}<small>${c.sub}</small>`;
-  b.addEventListener('click', () => selectTab(courseIdx));
-  tabsEl.appendChild(b);
-
-  c.semesters.forEach((s) => {
-    allSemestersHTML += `
-      <section class="sem" data-course="${courseIdx}">
-        <div class="sem__head"><h3>${s.n}</h3><span>${s.total}</span></div>
-        ${s.courses
-          .map(
-            (k) => `
-          <article class="course">
-            <button class="course__btn" aria-expanded="false">
-              <span class="course__name"><i aria-hidden="true">+</i>${esc(
-                k.name
-              )}</span>
-              <span class="course__meta">${k.h}<span class="badge ${
-              k.ex ? 'badge--ex' : ''
-            }">${k.ex ? 'экзамен' : 'зачёт'}</span></span>
-              <span class="course__teacher">${esc(k.t)}</span>
+      function renderDocuments() {
+        const list = document.getElementById('documents-list');
+        if (!list) return;
+        list.innerHTML = DOCUMENTS_DATA.map((doc) => `
+          <li>
+            <button
+              type="button"
+              data-doc-id="${doc.id}"
+              class="w-full text-left p-3.5 rounded-xl bg-white hover:bg-navy-900 hover:text-white border border-slate-200/80 transition-all group flex items-center justify-between gap-3"
+            >
+              <div class="flex items-start gap-3">
+                <div class="w-9 h-9 rounded-lg bg-ice-100 group-hover:bg-white/10 text-navy-900 group-hover:text-gold-400 flex items-center justify-center shrink-0 transition-colors">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                  </svg>
+                </div>
+                <div>
+                  <div class="text-sm font-semibold leading-snug">${doc.title}</div>
+                  <div class="text-xs text-slate-500 group-hover:text-blue-200 mt-0.5">${doc.meta}</div>
+                </div>
+              </div>
+              <svg class="w-4 h-4 text-slate-400 group-hover:text-gold-400 shrink-0 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+              </svg>
             </button>
-            <div class="course__panel"><div class="course__inner"><div class="course__text">
-              ${esc(k.d)}<br><b>Литература:</b> ${esc(k.lit)}
-            </div></div></div>
-          </article>`
-          )
-          .join('')}
-      </section>`;
-  });
-});
+          </li>
+        `).join('');
 
-panelsEl.innerHTML = `<div class="semesters" id="semestersGrid">${allSemestersHTML}</div>`;
-
-function selectTab(i) {
-  $$('.tab', tabsEl).forEach((t, j) => {
-    t.classList.toggle('is-active', j === i);
-    t.setAttribute('aria-selected', j === i);
-  });
-  $$('.sem', panelsEl).forEach((sem) => {
-    const courseIdx = +sem.dataset.course;
-    sem.style.display = courseIdx === i ? '' : 'none';
-  });
-}
-
-selectTab(0);
-
-tabsEl.addEventListener('keydown', (e) => {
-  const tabs = $$('.tab', tabsEl),
-    cur = tabs.indexOf(document.activeElement);
-  if (cur < 0) return;
-  let n = null;
-  if (e.key === 'ArrowRight') n = (cur + 1) % tabs.length;
-  if (e.key === 'ArrowLeft') n = (cur - 1 + tabs.length) % tabs.length;
-  if (n !== null) {
-    e.preventDefault();
-    tabs[n].focus();
-    selectTab(n);
-  }
-});
-
-panelsEl.addEventListener('click', (e) => {
-  const btn = e.target.closest('.course__btn');
-  if (!btn) return;
-  const c = btn.parentElement,
-    open = c.classList.toggle('is-open');
-  btn.setAttribute('aria-expanded', open);
-});
-
-$('#faq').innerHTML = FAQ.map(
-  ([q, a]) => `
-  <div class="q">
-    <button class="q__btn" aria-expanded="false">${esc(q)}</button>
-    <div class="q__panel"><div class="q__inner"><p>${esc(a)}</p></div></div>
-  </div>`
-).join('');
-$('#faq').addEventListener('click', (e) => {
-  const b = e.target.closest('.q__btn');
-  if (!b) return;
-  const q = b.parentElement,
-    open = q.classList.toggle('is-open');
-  b.setAttribute('aria-expanded', open);
-});
-
-const form = $('#form'),
-  ok = $('#formOk');
-const rules = {
-  name: (v) => v.trim().length >= 2,
-  email: (v) => /^[^\s@]+@[^\s@]+\.[a-zA-Zа-яА-Я]{2,}$/.test(v.trim()),
-  topic: (v) => v !== '',
-  msg: (v) => v.trim().length >= 15,
-};
-function validate(id) {
-  const el = $('#' + id),
-    wrap = $('#f-' + id),
-    good = rules[id](el.value);
-  wrap.classList.toggle('is-invalid', !good);
-  el.setAttribute('aria-invalid', !good);
-  return good;
-}
-['name', 'email', 'topic', 'msg'].forEach((id) => {
-  const el = $('#' + id);
-  el.addEventListener('blur', () => {
-    if (el.value) validate(id);
-  });
-  el.addEventListener('input', () => {
-    if ($('#f-' + id).classList.contains('is-invalid')) validate(id);
-  });
-});
-form.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const results = ['name', 'email', 'topic', 'msg'].map(validate);
-  const agree = $('#agree').checked;
-  $('#f-agree').classList.toggle('is-invalid', !agree);
-  if (results.includes(false) || !agree) {
-    const bad = $(
-      '.field.is-invalid input,.field.is-invalid select,.field.is-invalid textarea'
-    );
-    if (bad) bad.focus();
-    else $('#agree').focus();
-    return;
-  }
-  console.log('Заявка:', Object.fromEntries(new FormData(form)));
-  form.style.display = 'none';
-  ok.classList.add('is-shown');
-  ok.scrollIntoView({
-    block: 'center',
-    behavior: reduce ? 'auto' : 'smooth',
-  });
-});
-$('#again').addEventListener('click', () => {
-  form.reset();
-  form.style.display = '';
-  ok.classList.remove('is-shown');
-  $$('.field').forEach((f) => f.classList.remove('is-invalid'));
-  $('#f-agree').classList.remove('is-invalid');
-  $('#name').focus();
-});
-
-const header = $('#header'),
-  progress = $('#progress'),
-  toTop = $('#toTop'),
-  nav = $('#nav'),
-  burger = $('#burger');
-function onScroll() {
-  const y = scrollY,
-    h = document.documentElement.scrollHeight - innerHeight;
-  header.classList.toggle('is-stuck', y > 10);
-  progress.style.width = (h > 0 ? (y / h) * 100 : 0) + '%';
-  toTop.classList.toggle('is-shown', y > 700);
-}
-addEventListener('scroll', onScroll, { passive: true });
-onScroll();
-toTop.addEventListener('click', () =>
-  scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' })
-);
-burger.addEventListener('click', () => {
-  const open = nav.classList.toggle('is-open');
-  burger.classList.toggle('is-open', open);
-  burger.setAttribute('aria-expanded', open);
-});
-nav.addEventListener('click', (e) => {
-  if (e.target.tagName === 'A') {
-    nav.classList.remove('is-open');
-    burger.classList.remove('is-open');
-    burger.setAttribute('aria-expanded', 'false');
-  }
-});
-const links = $$('.nav a[href^="#"]').filter(
-  (a) => a.getAttribute('href').length > 1
-);
-const spy = new IntersectionObserver(
-  (es) => {
-    es.forEach((en) => {
-      if (en.isIntersecting) {
-        links.forEach((l) =>
-          l.classList.toggle(
-            'is-active',
-            l.getAttribute('href') === '#' + en.target.id
-          )
-        );
+        list.querySelectorAll('[data-doc-id]').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const doc = DOCUMENTS_DATA.find((d) => d.id === btn.dataset.docId);
+            if (!doc) return;
+            openDetailModal({
+              badges: ['Документ программы', doc.meta],
+              title: doc.title,
+              bodyHtml: `
+                <p>${doc.summary}</p>
+                <div class="p-4 rounded-xl bg-ice-100 border border-slate-200">
+                  <div class="text-xs font-bold uppercase tracking-wider text-navy-900 mb-2">Ключевые разделы документа:</div>
+                  <ul class="space-y-1.5 text-sm text-slate-700 list-disc list-inside">
+                    ${doc.highlights.map((h) => `<li>${h}</li>`).join('')}
+                  </ul>
+                </div>
+                <p class="text-xs text-slate-500">Примечание: в данном шаблоне используется интерактивный предпросмотр. Подставьте прямую ссылку на ваш PDF-файл в атрибуте кнопки загрузки.</p>
+              `,
+              actionLabel: 'Скачать PDF-версию',
+              onAction: () => {
+                closeModal('detail-modal');
+                showToast(`Загрузка «${doc.title}» (демо-режим шаблона)`);
+              }
+            });
+          });
+        });
       }
-    });
-  },
-  { rootMargin: '-45% 0px -50% 0px' }
-);
-['about', 'team', 'program', 'admission', 'contacts'].forEach((id) => {
-  const s = $('#' + id);
-  if (s) spy.observe(s);
-});
 
-const rv = new IntersectionObserver(
-  (es, o) => {
-    es.forEach((en) => {
-      if (en.isIntersecting) {
-        en.target.classList.add('is-in');
-        o.unobserve(en.target);
+      /* =========================================================================
+         4. УЧЕБНЫЙ ПЛАН: ВКЛАДКИ, ПОИСК И РАСКРЫВАЕМЫЕ ПРОГРАММЫ КУРСОВ
+         ========================================================================= */
+
+      let activeCurriculumTab = 'mandatory';
+      let courseSearchQuery = '';
+
+      function renderCourses() {
+        const container = document.getElementById('courses-container');
+        const emptyMsg = document.getElementById('courses-empty');
+        if (!container || !emptyMsg) return;
+
+        const q = courseSearchQuery.trim().toLowerCase();
+        const filtered = COURSES_DATA.filter((course) => {
+          const matchesTab = course.categories.includes(activeCurriculumTab);
+          if (!q) return matchesTab;
+          // При поиске ищем внутри активной вкладки, либо по всем, если вкладка не совпадает — оставим фильтрацию в рамках выбранной вкладки + понятный UX
+          return matchesTab && (
+            course.title.toLowerCase().includes(q) ||
+            course.lecturer.toLowerCase().includes(q) ||
+            course.syllabus.some((topic) => topic.toLowerCase().includes(q))
+          );
+        });
+
+        if (filtered.length === 0) {
+          container.innerHTML = '';
+          container.classList.add('hidden');
+          emptyMsg.classList.remove('hidden');
+          return;
+        }
+
+        container.classList.remove('hidden');
+        emptyMsg.classList.add('hidden');
+
+        container.innerHTML = filtered.map((course) => `
+          <div class="course-row bg-white hover:bg-ice-50/70 transition-colors">
+            <div class="grid md:grid-cols-12 gap-3 md:gap-4 items-center px-5 py-4">
+              <div class="md:col-span-5">
+                <div class="font-semibold text-navy-900 text-base leading-snug">${course.title}</div>
+                <div class="text-xs text-slate-500 mt-0.5">${course.credits}</div>
+              </div>
+              <div class="md:col-span-3 text-sm text-slate-700 flex items-center gap-2">
+                <span class="md:hidden text-xs font-semibold text-slate-400">Лектор:</span>
+                <span>${course.lecturer}</span>
+              </div>
+              <div class="md:col-span-2 flex flex-wrap md:flex-col gap-1.5 md:gap-0.5">
+                <span class="text-xs font-semibold text-navy-800">${course.semester}</span>
+                <span class="inline-flex w-fit px-2 py-0.5 rounded-md bg-ice-100 text-slate-600 text-[11px] font-medium">${course.format}</span>
+              </div>
+              <div class="md:col-span-2 md:text-right pt-1 md:pt-0">
+                <button
+                  type="button"
+                  data-toggle-syllabus="${course.id}"
+                  aria-expanded="false"
+                  class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold text-navy-600 hover:text-navy-900 bg-ice-100 hover:bg-ice-200 transition-colors"
+                >
+                  <span>Программа курса</span>
+                  <svg class="w-3.5 h-3.5 transition-transform duration-200 syllabus-chevron" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Раскрываемая программа курса -->
+            <div id="syllabus-${course.id}" class="accordion-content bg-ice-50/90 border-t border-slate-100">
+              <div class="accordion-inner">
+                <div class="px-5 py-4 sm:px-7">
+                  <div class="text-xs font-bold uppercase tracking-wider text-gold-600 mb-2.5">Основные разделы программы</div>
+                  <ul class="grid sm:grid-cols-2 gap-x-6 gap-y-2 text-sm text-slate-700">
+                    ${course.syllabus.map((topic, idx) => `
+                      <li class="flex items-start gap-2.5">
+                        <span class="w-5 h-5 rounded-md bg-navy-900/10 text-navy-900 text-[11px] font-bold flex items-center justify-center shrink-0 mt-0.5">${idx + 1}</span>
+                        <span>${topic}</span>
+                      </li>
+                    `).join('')}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        `).join('');
+
+        // Навешиваем обработчики раскрытия программы курса
+        container.querySelectorAll('[data-toggle-syllabus]').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const id = btn.dataset.toggleSyllabus;
+            const panel = document.getElementById(`syllabus-${id}`);
+            const chevron = btn.querySelector('.syllabus-chevron');
+            if (!panel) return;
+            const isOpen = panel.classList.toggle('open');
+            btn.setAttribute('aria-expanded', String(isOpen));
+            if (chevron) chevron.classList.toggle('rotate-180', isOpen);
+          });
+        });
       }
-    });
-  },
-  { threshold: 0.12, rootMargin: '0px 0px -40px' }
-);
-$$('.rv').forEach((el, i) => {
-  el.style.transitionDelay = (i % 3) * 70 + 'ms';
-  rv.observe(el);
-});
 
-/* ================== МОДЕЛЬ АТОМА — МИНИМАЛИСТИЧНАЯ ================== */
-(() => {
-  const cv = $('#atom'),
-    ctx = cv.getContext('2d');
-  let w = 0,
-    h = 0,
-    dpr = Math.min(devicePixelRatio || 1, 2),
-    visible = true;
+      function initCurriculumControls() {
+        const tabs = document.querySelectorAll('.curriculum-tab');
+        tabs.forEach((tab) => {
+          tab.addEventListener('click', () => {
+            activeCurriculumTab = tab.dataset.curriculumTab;
+            tabs.forEach((t) => {
+              const active = t === tab;
+              t.setAttribute('aria-selected', String(active));
+              t.className = active
+                ? 'curriculum-tab px-4 py-2.5 rounded-xl text-sm font-semibold transition-all bg-navy-900 text-white shadow-sm'
+                : 'curriculum-tab px-4 py-2.5 rounded-xl text-sm font-semibold transition-all bg-ice-100 text-slate-700 hover:bg-ice-200';
+            });
+            renderCourses();
+          });
+        });
 
-  function size() {
-    const r = cv.parentElement.getBoundingClientRect();
-    w = r.width;
-    h = r.height;
-    cv.width = w * dpr;
-    cv.height = h * dpr;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  }
+        const searchInput = document.getElementById('course-search');
+        if (searchInput) {
+          searchInput.addEventListener('input', (e) => {
+            courseSearchQuery = e.target.value;
+            renderCourses();
+          });
+        }
+      }
 
-  const orbits = [
-    { angle: -30, ratio: 0.38, speed: 1.0, phase: 0 },
-    { angle: 30, ratio: 0.38, speed: 0.75, phase: 2.1 },
-    { angle: 90, ratio: 0.38, speed: 1.25, phase: 4.2 },
-  ];
+      /* =========================================================================
+         5. НОВОСТИ И РАСПИСАНИЕ СЕМИНАРОВ
+         ========================================================================= */
 
-  function frame(time) {
-    const t = reduce ? 0 : time / 1000;
-    ctx.clearRect(0, 0, w, h);
-    const cx = w / 2,
-      cy = h / 2;
-    const R = Math.min(w, h) * 0.4;
+      let activeNewsFilter = 'all';
 
-    // Орбиты — тонкие линии
-    orbits.forEach((o) => {
-      ctx.save();
-      ctx.translate(cx, cy);
-      ctx.rotate((o.angle * Math.PI) / 180);
-      ctx.strokeStyle = '#009CDE';
-      ctx.globalAlpha = 0.25;
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      ctx.ellipse(0, 0, R, R * o.ratio, 0, 0, Math.PI * 2);
-      ctx.stroke();
-      ctx.restore();
-    });
+      function getCategoryBadgeClass(cat) {
+        if (cat === 'Семинары') return 'bg-navy-900/10 text-navy-900';
+        if (cat === 'Объявления') return 'bg-amber-100 text-amber-900';
+        return 'bg-blue-100 text-blue-900';
+      }
 
-    // Ядро — простая точка
-    ctx.fillStyle = '#009CDE';
-    ctx.beginPath();
-    ctx.arc(cx, cy, R * 0.04, 0, Math.PI * 2);
-    ctx.fill();
+      function renderNews() {
+        const grid = document.getElementById('news-grid');
+        if (!grid) return;
 
-    // Электроны — маленькие точки без хвостов
-    orbits.forEach((o) => {
-      const theta = t * o.speed + o.phase;
-      const rad = (o.angle * Math.PI) / 180;
-      const a = R,
-        b = R * o.ratio;
+        const items = activeNewsFilter === 'all'
+          ? NEWS_DATA
+          : NEWS_DATA.filter((item) => item.category === activeNewsFilter);
 
-      const lx = Math.cos(theta) * a;
-      const ly = Math.sin(theta) * b;
-      const ex = cx + lx * Math.cos(rad) - ly * Math.sin(rad);
-      const ey = cy + lx * Math.sin(rad) + ly * Math.cos(rad);
+        grid.innerHTML = items.map((item) => `
+          <article class="bg-white rounded-2xl border border-slate-200/80 shadow-card hover:shadow-academic transition-all flex flex-col overflow-hidden">
+            <div class="p-6 flex-1 flex flex-col">
+              <div class="flex items-start justify-between gap-3">
+                <div class="flex items-center gap-3">
+                  <div class="w-12 h-12 rounded-xl bg-navy-900 text-white flex flex-col items-center justify-center shrink-0 leading-none">
+                    <span class="font-serif font-bold text-base">${item.day}</span>
+                    <span class="text-[10px] uppercase tracking-wider text-gold-400 mt-0.5">${item.month}</span>
+                  </div>
+                  <div>
+                    <span class="inline-block px-2.5 py-0.5 rounded-md text-xs font-semibold ${getCategoryBadgeClass(item.category)}">
+                      ${item.category}
+                    </span>
+                    <div class="text-[11px] text-slate-400 mt-1">${item.year}</div>
+                  </div>
+                </div>
+              </div>
 
-      ctx.fillStyle = '#009CDE';
-      ctx.beginPath();
-      ctx.arc(ex, ey, R * 0.025, 0, Math.PI * 2);
-      ctx.fill();
-    });
+              <h3 class="mt-4 font-serif text-lg font-bold text-navy-900 leading-snug">
+                ${item.title}
+              </h3>
 
-    // Угловые метки
-    ctx.strokeStyle = 'rgba(0,156,222,.3)';
-    ctx.lineWidth = 1;
-    const m = 12,
-      L = 14;
-    [
-      [m, m, 1, 1],
-      [w - m, m, -1, 1],
-      [m, h - m, 1, -1],
-      [w - m, h - m, -1, -1],
-    ].forEach(([x, y, sx, sy]) => {
-      ctx.beginPath();
-      ctx.moveTo(x + sx * L, y);
-      ctx.lineTo(x, y);
-      ctx.lineTo(x, y + sy * L);
-      ctx.stroke();
-    });
-  }
+              <div class="mt-3 space-y-1 text-xs text-slate-500">
+                <div class="font-medium text-slate-700">${item.speaker}</div>
+                <div>${item.timePlace}</div>
+              </div>
 
-  function loop(t) {
-    if (visible) frame(t);
-    requestAnimationFrame(loop);
-  }
-  size();
-  new ResizeObserver(() => {
-    size();
-    frame(performance.now());
-  }).observe(cv.parentElement);
-  new IntersectionObserver(
-    (es) => {
-      visible = es[0].isIntersecting;
-    },
-    { threshold: 0 }
-  ).observe(cv);
-  if (reduce) frame(0);
-  else requestAnimationFrame(loop);
-})();
+              <p class="mt-3 text-sm text-slate-600 leading-relaxed flex-1">
+                ${item.excerpt}
+              </p>
+
+              <div class="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between">
+                <button
+                  type="button"
+                  data-news-id="${item.id}"
+                  class="inline-flex items-center gap-1.5 text-sm font-semibold text-navy-600 hover:text-navy-900 transition-colors"
+                >
+                  <span>Подробнее</span>
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </article>
+        `).join('');
+
+        grid.querySelectorAll('[data-news-id]').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const item = NEWS_DATA.find((n) => n.id === btn.dataset.newsId);
+            if (!item) return;
+            openDetailModal({
+              badges: [item.category, `${item.day} ${item.month} ${item.year}`],
+              title: item.title,
+              bodyHtml: `
+                <div class="p-4 rounded-xl bg-ice-100 border border-slate-200 space-y-1 text-sm">
+                  <div class="font-semibold text-navy-900">${item.speaker}</div>
+                  <div class="text-slate-600">${item.timePlace}</div>
+                </div>
+                <p>${item.fullText}</p>
+              `,
+              actionLabel: item.category === 'Семинары' ? 'Напомнить о семинаре' : 'Задать вопрос по событию',
+              onAction: () => {
+                closeModal('detail-modal');
+                if (item.category === 'Семинары') {
+                  showToast('Событие отмечено! Ссылку на трансляцию можно добавить в календарь.');
+                } else {
+                  openModal('apply-modal');
+                }
+              }
+            });
+          });
+        });
+      }
+
+      function initNewsFilters() {
+        const buttons = document.querySelectorAll('.news-filter-btn');
+        buttons.forEach((btn) => {
+          btn.addEventListener('click', () => {
+            activeNewsFilter = btn.dataset.newsFilter;
+            buttons.forEach((b) => {
+              const active = b === btn;
+              b.className = active
+                ? 'news-filter-btn px-4 py-2 rounded-xl text-sm font-semibold bg-navy-900 text-white shadow-sm transition-all'
+                : 'news-filter-btn px-4 py-2 rounded-xl text-sm font-semibold bg-white text-slate-700 border border-slate-200 hover:border-navy-600/40 transition-all';
+            });
+            renderNews();
+          });
+        });
+      }
+
+      /* =========================================================================
+         6. ПРЕПОДАВАТЕЛИ
+         ========================================================================= */
+
+      function renderFaculty() {
+        const grid = document.getElementById('faculty-grid');
+        if (!grid) return;
+
+        grid.innerHTML = FACULTY_DATA.map((person) => `
+          <article class="rounded-2xl bg-ice-50 border border-slate-200/80 p-5 hover:bg-white hover:shadow-card transition-all flex flex-col">
+            <div class="flex items-center gap-3.5">
+              <div class="w-12 h-12 rounded-xl bg-gradient-to-br ${person.accent} text-white font-serif font-bold text-base flex items-center justify-center shrink-0 shadow-sm">
+                ${person.initials}
+              </div>
+              <div class="min-w-0">
+                <h3 class="font-semibold text-navy-900 text-sm leading-snug">${person.name}</h3>
+                <p class="text-xs text-slate-500 mt-0.5">${person.title}</p>
+              </div>
+            </div>
+            <div class="mt-4 pt-3.5 border-t border-slate-200/70 flex flex-wrap gap-1.5">
+              ${person.tags.map((tag) => `
+                <span class="px-2.5 py-1 rounded-md bg-white border border-slate-200 text-navy-800 text-[11px] font-medium">${tag}</span>
+              `).join('')}
+            </div>
+          </article>
+        `).join('');
+      }
+
+      /* =========================================================================
+         7. FAQ-АККОРДЕОН
+         ========================================================================= */
+
+      function renderFAQ() {
+        const container = document.getElementById('faq-container');
+        if (!container) return;
+
+        container.innerHTML = FAQ_DATA.map((item, idx) => `
+          <div class="bg-white rounded-2xl border border-slate-200/90 shadow-card overflow-hidden">
+            <button
+              type="button"
+              data-faq-idx="${idx}"
+              aria-expanded="${idx === 0 ? 'true' : 'false'}"
+              class="w-full px-5 sm:px-6 py-4 text-left flex items-center justify-between gap-4 hover:bg-ice-50 transition-colors"
+            >
+              <span class="font-semibold text-navy-900 text-sm sm:text-base leading-snug">${item.q}</span>
+              <span class="w-7 h-7 rounded-lg bg-ice-100 text-navy-900 flex items-center justify-center shrink-0 transition-transform duration-200 faq-icon ${idx === 0 ? 'rotate-180' : ''}">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                </svg>
+              </span>
+            </button>
+            <div id="faq-panel-${idx}" class="accordion-content ${idx === 0 ? 'open' : ''}">
+              <div class="accordion-inner">
+                <div class="px-5 sm:px-6 pb-5 pt-1 text-sm text-slate-600 leading-relaxed border-t border-slate-100">
+                  ${item.a}
+                </div>
+              </div>
+            </div>
+          </div>
+        `).join('');
+
+        container.querySelectorAll('[data-faq-idx]').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const idx = btn.dataset.faqIdx;
+            const panel = document.getElementById(`faq-panel-${idx}`);
+            const icon = btn.querySelector('.faq-icon');
+            if (!panel) return;
+            const isOpen = panel.classList.toggle('open');
+            btn.setAttribute('aria-expanded', String(isOpen));
+            if (icon) icon.classList.toggle('rotate-180', isOpen);
+          });
+        });
+      }
+
+      /* =========================================================================
+         8. УНИВЕРСАЛЬНОЕ МОДАЛЬНОЕ ОКНО ПОДРОБНОСТЕЙ
+         ========================================================================= */
+
+      function openDetailModal({ badges, title, bodyHtml, actionLabel, onAction }) {
+        const metaEl = document.getElementById('detail-modal-meta');
+        const titleEl = document.getElementById('detail-modal-title');
+        const bodyEl = document.getElementById('detail-modal-body');
+        const footerEl = document.getElementById('detail-modal-footer');
+        if (!metaEl || !titleEl || !bodyEl || !footerEl) return;
+
+        metaEl.innerHTML = badges
+          .map((b) => `<span class="px-2.5 py-0.5 rounded-md bg-navy-900/10 text-navy-900">${b}</span>`)
+          .join('');
+        titleEl.textContent = title;
+        bodyEl.innerHTML = bodyHtml;
+
+        footerEl.innerHTML = `
+          <button type="button" data-close-modal="detail-modal" class="px-4 py-2 rounded-xl border border-slate-300 text-slate-700 hover:bg-ice-100 text-sm font-medium transition-colors">
+            Закрыть
+          </button>
+          ${actionLabel ? `<button type="button" id="detail-action-btn" class="px-5 py-2 rounded-xl bg-navy-900 hover:bg-navy-800 text-white text-sm font-semibold transition-colors">${actionLabel}</button>` : ''}
+        `;
+
+        footerEl.querySelector('[data-close-modal="detail-modal"]')?.addEventListener('click', () => closeModal('detail-modal'));
+        if (actionLabel && onAction) {
+          document.getElementById('detail-action-btn')?.addEventListener('click', onAction);
+        }
+
+        openModal('detail-modal');
+      }
+
+      /* =========================================================================
+         9. ФОРМА ПОДАЧИ ЗАЯВКИ (ВАЛИДАЦИЯ НА КЛИЕНТЕ)
+         ========================================================================= */
+
+      function initApplyForm() {
+        const form = document.getElementById('apply-form');
+        const successBox = document.getElementById('apply-success');
+        const successText = document.getElementById('apply-success-text');
+        const resetBtn = document.getElementById('apply-reset-btn');
+        if (!form || !successBox) return;
+
+        function setFieldError(inputId, errorId, hasError) {
+          const input = document.getElementById(inputId);
+          const err = document.getElementById(errorId);
+          if (err) err.classList.toggle('hidden', !hasError);
+          if (input && input.type !== 'checkbox') {
+            input.classList.toggle('border-red-500', hasError);
+            input.classList.toggle('border-slate-300', !hasError);
+          }
+        }
+
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const nameVal = document.getElementById('apply-name').value.trim();
+          const emailVal = document.getElementById('apply-email').value.trim();
+          const statusVal = document.getElementById('apply-status').value;
+          const msgVal = document.getElementById('apply-message').value.trim();
+          const consentVal = document.getElementById('apply-consent').checked;
+
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+          const nameErr = nameVal.length < 2;
+          const emailErr = !emailRegex.test(emailVal);
+          const msgErr = msgVal.length < 10;
+          const consentErr = !consentVal;
+
+          setFieldError('apply-name', 'error-name', nameErr);
+          setFieldError('apply-email', 'error-email', emailErr);
+          setFieldError('apply-message', 'error-message', msgErr);
+          setFieldError('apply-consent', 'error-consent', consentErr);
+
+          if (nameErr || emailErr || msgErr || consentErr) {
+            return;
+          }
+
+          form.classList.add('hidden');
+          successBox.classList.remove('hidden');
+          if (successText) {
+            successText.textContent = `${nameVal} (${statusVal}), ваша заявка зарегистрирована. Ответ будет направлен на адрес ${emailVal}.`;
+          }
+          showToast('Заявка успешно отправлена в учебный офис');
+        });
+
+        resetBtn?.addEventListener('click', () => {
+          form.reset();
+          form.classList.remove('hidden');
+          successBox.classList.add('hidden');
+          closeModal('apply-modal');
+        });
+      }
+
+      /* =========================================================================
+         10. ГЛОБАЛЬНЫЙ БЫСТРЫЙ ПОИСК
+         ========================================================================= */
+
+      function initGlobalSearch() {
+        const openBtn = document.getElementById('open-search-btn');
+        const input = document.getElementById('global-search-input');
+        const resultsEl = document.getElementById('global-search-results');
+        if (!openBtn || !input || !resultsEl) return;
+
+        openBtn.addEventListener('click', () => {
+          openModal('search-modal');
+          setTimeout(() => input.focus(), 60);
+        });
+
+        input.addEventListener('input', (e) => {
+          const q = e.target.value.trim().toLowerCase();
+          if (q.length < 2) {
+            resultsEl.innerHTML = '<div class="p-6 text-center text-sm text-slate-400">Введите не менее 2 символов для поиска.</div>';
+            return;
+          }
+
+          const matches = [];
+          COURSES_DATA.forEach((c) => {
+            if (c.title.toLowerCase().includes(q) || c.lecturer.toLowerCase().includes(q)) {
+              matches.push({ type: 'Курс', title: c.title, sub: c.lecturer, target: '#curriculum' });
+            }
+          });
+          NEWS_DATA.forEach((n) => {
+            if (n.title.toLowerCase().includes(q) || n.excerpt.toLowerCase().includes(q)) {
+              matches.push({ type: n.category, title: n.title, sub: n.timePlace, target: '#news' });
+            }
+          });
+          FACULTY_DATA.forEach((f) => {
+            if (f.name.toLowerCase().includes(q) || f.tags.some((t) => t.toLowerCase().includes(q))) {
+              matches.push({ type: 'Преподаватель', title: f.name, sub: f.title, target: '#faculty' });
+            }
+          });
+
+          if (matches.length === 0) {
+            resultsEl.innerHTML = '<div class="p-6 text-center text-sm text-slate-400">Ничего не найдено. Попробуйте другой запрос.</div>';
+            return;
+          }
+
+          resultsEl.innerHTML = matches.slice(0, 8).map((m) => `
+            <a href="${m.target}" class="search-result-link block px-4 py-3 rounded-xl hover:bg-ice-100 transition-colors">
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-sm font-semibold text-navy-900">${m.title}</span>
+                <span class="px-2 py-0.5 rounded-md bg-navy-900/10 text-navy-800 text-[11px] font-semibold shrink-0">${m.type}</span>
+              </div>
+              <div class="text-xs text-slate-500 mt-0.5">${m.sub}</div>
+            </a>
+          `).join('');
+
+          resultsEl.querySelectorAll('.search-result-link').forEach((link) => {
+            link.addEventListener('click', () => closeModal('search-modal'));
+          });
+        });
+      }
+
+      /* =========================================================================
+         11. МОБИЛЬНОЕ МЕНЮ, КОПИРОВАНИЕ EMAIL И ОБЩИЕ СОБЫТИЯ
+         ========================================================================= */
+
+      function initNavigationAndEvents() {
+        // Мобильное меню
+        const openDrawerBtn = document.getElementById('mobile-menu-btn');
+        const closeDrawerBtn = document.getElementById('close-mobile-menu');
+        const drawer = document.getElementById('mobile-drawer');
+        const overlay = document.getElementById('mobile-drawer-overlay');
+
+        function setDrawerOpen(open) {
+          if (!drawer || !overlay || !openDrawerBtn) return;
+          openDrawerBtn.setAttribute('aria-expanded', String(open));
+          drawer.classList.toggle('translate-x-full', !open);
+          overlay.classList.toggle('hidden', !open);
+          document.body.classList.toggle('overflow-hidden', open);
+        }
+
+        openDrawerBtn?.addEventListener('click', () => setDrawerOpen(true));
+        closeDrawerBtn?.addEventListener('click', () => setDrawerOpen(false));
+        overlay?.addEventListener('click', () => setDrawerOpen(false));
+        document.querySelectorAll('.mobile-nav-link').forEach((link) => {
+          link.addEventListener('click', () => setDrawerOpen(false));
+        });
+
+        // Кнопки открытия формы заявки
+        document.querySelectorAll('[data-open-apply]').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            setDrawerOpen(false);
+            // Сбросим экран успеха, если форма уже отправлялась
+            document.getElementById('apply-form')?.classList.remove('hidden');
+            document.getElementById('apply-success')?.classList.add('hidden');
+            openModal('apply-modal');
+          });
+        });
+
+        // Кнопки закрытия модальных окон
+        document.querySelectorAll('[data-close-modal]').forEach((btn) => {
+          btn.addEventListener('click', () => closeModal(btn.dataset.closeModal));
+        });
+
+        // Клик по затемнённому фону модалки закрывает её
+        ['apply-modal', 'detail-modal', 'search-modal'].forEach((id) => {
+          const modal = document.getElementById(id);
+          modal?.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal(id);
+          });
+        });
+
+        // Закрытие по Escape
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') {
+            closeAllModals();
+            setDrawerOpen(false);
+          }
+        });
+
+        // Тень хедера при прокрутке
+        const header = document.getElementById('site-header');
+        window.addEventListener('scroll', () => {
+          if (!header) return;
+          header.classList.toggle('shadow-md', window.scrollY > 12);
+        }, { passive: true });
+
+        // Копирование email через execCommand (безопасно для iFrame)
+        const copyBtn = document.getElementById('copy-email-btn');
+        copyBtn?.addEventListener('click', () => {
+          const text = copyBtn.dataset.copy || 'info@program-template.edu.ru';
+          try {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            showToast(`Email ${text} скопирован`);
+          } catch (err) {
+            showToast(`Почта: ${text}`);
+          }
+        });
+      }
+
+      /* =========================================================================
+         12. ИНИЦИАЛИЗАЦИЯ ПРИ ЗАГРУЗКЕ СТРАНИЦЫ
+         ========================================================================= */
+
+      document.addEventListener('DOMContentLoaded', () => {
+        try {
+          renderDocuments();
+          initCurriculumControls();
+          renderCourses();
+          initNewsFilters();
+          renderNews();
+          renderFaculty();
+          renderFAQ();
+          initApplyForm();
+          initGlobalSearch();
+          initNavigationAndEvents();
+        } catch (error) {
+          console.error('Ошибка инициализации интерфейса:', error);
+        }
+      });
+    })();

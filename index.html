@@ -1,670 +1,826 @@
 <!DOCTYPE html>
-<html lang="ru">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Спецпоток мехмата МГУ — углублённая математическая подготовка</title>
-    <meta
-      name="description"
-      content="Спецпоток механико-математического факультета МГУ: руководители и преподаватели, программа курсов, условия отбора, расписание консультаций и контакты."
-    />
-    <meta name="theme-color" content="#002855" />
-    <link
-      rel="icon"
-      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='14' fill='%23002855'/><text x='50' y='74' font-size='70' font-family='Georgia,serif' fill='%230054A5' text-anchor='middle'>∫</text></svg>"
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-
-  <body>
-    <a class="skip" href="#main">Перейти к содержанию</a>
-    <div class="progress" id="progress"></div>
-
-    <header class="header" id="header">
-      <div class="container header__in">
-        <a
-          href="#hero"
-          class="logo"
-          aria-label="Спецпоток мехмата МГУ — на главную"
-        >
-          <span class="logo__mark" aria-hidden="true">∫</span>
-          <span class="logo__txt"
-            ><strong>Спецпоток</strong><span>мехмат МГУ</span></span
-          >
-        </a>
-        <button
-          class="burger"
-          id="burger"
-          aria-label="Меню"
-          aria-expanded="false"
-          aria-controls="nav"
-        >
-          <span></span><span></span><span></span>
-        </button>
-        <nav class="nav" id="nav" aria-label="Основная навигация">
-          <a href="#about">О спецпотоке</a>
-          <a href="#team">Преподаватели</a>
-          <a href="#program">Программа</a>
-          <a href="#admission">Поступление</a>
-          <a href="#contacts">Контакты</a>
-          <a href="#contacts" class="btn btn--primary">Задать вопрос</a>
-        </nav>
-      </div>
-    </header>
-
-    <main id="main">
-      <section class="hero" id="hero">
-        <div class="hero__seal" aria-hidden="true">
-          <svg
-            viewBox="0 0 200 200"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <circle
-              cx="100"
-              cy="100"
-              r="95"
-              stroke="#009CDE"
-              stroke-width="2"
-            />
-            <circle
-              cx="100"
-              cy="100"
-              r="80"
-              stroke="#009CDE"
-              stroke-width="1"
-            />
-            <text
-              font-family="JetBrains Mono, monospace"
-              font-size="10"
-              fill="#009CDE"
-              letter-spacing="2"
-            >
-              <textPath href="#circle-path" startOffset="0">
-                МЕХМАТ МГУ · РОСАТОМ · УГЛУБЛЁННАЯ МАТЕМАТИКА · ФИЗИКА ·
-              </textPath>
-            </text>
-            <path
-              id="circle-path"
-              d="M 100,100 m -70,0 a 70,70 0 1,1 140,0 a 70,70 0 1,1 -140,0"
-              fill="none"
-            />
-            <text
-              x="100"
-              y="105"
-              font-family="Playfair Display, serif"
-              font-size="36"
-              fill="#009CDE"
-              text-anchor="middle"
-            >
-              ∫
-            </text>
-          </svg>
-        </div>
-
-        <div class="container hero__in">
-          <div>
-            <p class="eyebrow">МГУ имени М. В. Ломоносова · Мехмат</p>
-            <h1>
-              Спецпоток<em>углублённая математика<br />с первого семестра</em>
-            </h1>
-            <p class="hero__lead">
-              Отдельный поток с усиленной программой по анализу, алгебре и
-              геометрии. Малые группы, семинары у действующих математиков,
-              научная работа со второго курса.
-            </p>
-            <div class="hero__cta">
-              <a href="#admission" class="btn btn--primary"
-                >Как поступить
-                <span class="btn__arrow" aria-hidden="true">→</span></a
-              >
-              <a href="#program" class="btn btn--ghost">Программа курса</a>
-            </div>
-            <div class="hero__meta">
-              <span>Набор <b>2027</b></span>
-              <span>Группа <b>18 человек</b></span>
-              <span>Отбор <b>сентябрь</b></span>
-            </div>
-          </div>
-          <figure class="figure" style="margin: 0">
-            <span class="figure__tag">fig. 01</span>
-            <canvas
-              id="atom"
-              aria-label="Анимированная модель атома"
-              role="img"
-            ></canvas>
-            <figcaption class="figure__cap">
-              <span>3 орбиты · 3 электрона</span><span>модель Бора</span>
-            </figcaption>
-          </figure>
-        </div>
-        <div class="ticker" aria-hidden="true">
-          <div class="ticker__row" id="ticker"></div>
-        </div>
-      </section>
-
-      <section class="section" id="about">
-        <div class="container">
-          <div class="sec-head rv">
-            <div>
-              <p class="eyebrow">§ 01 — О спецпотоке</p>
-              <h2 class="h2">
-                Программа для тех,<br />кто идёт дальше syllabus'а
-              </h2>
-            </div>
-            <p class="lead">
-              Спецпоток — это не «больше задач», а другая логика изложения:
-              курсы читаются в едином стиле, с полными доказательствами и ранним
-              выходом к современным разделам математики.
-            </p>
-          </div>
-
-          <div class="features">
-            <article class="feature rv">
-              <div class="feature__badge">01</div>
-              <div class="feature__i">01 / КУРСЫ</div>
-              <h3>Углублённый анализ и алгебра</h3>
-              <p>
-                Теория меры, функциональный анализ и общая топология вводятся
-                раньше обычного; линейная алгебра сразу строится на языке
-                модулей и категорий.
-              </p>
-            </article>
-            <article class="feature rv">
-              <div class="feature__badge">02</div>
-              <div class="feature__i">02 / ФОРМАТ</div>
-              <h3>Листки вместо типовых задач</h3>
-              <p>
-                Основная форма работы — еженедельный листок и устная сдача задач
-                семинаристу. Оценка складывается из сдачи, а не из контрольных.
-              </p>
-            </article>
-            <article class="feature rv">
-              <div class="feature__badge">03</div>
-              <div class="feature__i">03 / НАУКА</div>
-              <h3>Семинар со второго курса</h3>
-              <p>
-                Каждый студент закрепляется за научным руководителем и выбирает
-                семинар кафедры; к четвёртому курсу — курсовая и диплом
-                исследовательского типа.
-              </p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="section section--alt" id="team">
-        <div class="container">
-          <div class="sec-head rv">
-            <div>
-              <p class="eyebrow">§ 02 — Люди</p>
-              <h2 class="h2">Руководители<br />и преподаватели</h2>
-            </div>
-            <p class="lead">
-              Нажмите на карточку, чтобы увидеть читаемые курсы, научные
-              интересы, контакты и часы консультаций.
-            </p>
-          </div>
-
-          <div class="toolbar rv">
-            <div
-              class="filters"
-              id="filters"
-              role="group"
-              aria-label="Фильтр по роли"
-            ></div>
-            <div class="search">
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="none"
-                aria-hidden="true"
-              >
-                <circle
-                  cx="7"
-                  cy="7"
-                  r="5"
-                  stroke="currentColor"
-                  stroke-width="1.6"
-                />
-                <path d="M11 11l4 4" stroke="currentColor" stroke-width="1.6" />
-              </svg>
-              <input
-                type="search"
-                id="search"
-                placeholder="Имя, кафедра или курс…"
-                aria-label="Поиск преподавателя"
-              />
-            </div>
-          </div>
-
-          <div class="people" id="people"></div>
-
-          <p class="team-note rv">
-            <span aria-hidden="true">※</span
-            ><span
-              ><b>Консультации.</b> Общие часы приёма — учебная часть
-              спецпотока, ауд. 13-24, вторник и четверг 15:00–17:00.
-              Индивидуальные встречи согласуются по почте.</span
-            >
-          </p>
-        </div>
-      </section>
-
-      <section class="section section--ink" id="program">
-        <div class="container">
-          <div class="sec-head rv">
-            <div>
-              <p class="eyebrow">§ 03 — Учебный план</p>
-              <h2 class="h2">Программа курса</h2>
-            </div>
-            <p class="lead">
-              Восемь семестров, сквозная линия анализа и алгебры, спецсеминары
-              по выбору. Формат часов: лекции / семинары в неделю.
-            </p>
-          </div>
-
-          <div
-            class="tabs rv"
-            id="tabs"
-            role="tablist"
-            aria-label="Курсы обучения"
-          ></div>
-          <div id="panels"></div>
-
-          <div class="prog-foot rv">
-            <p>
-              Полный учебный план с распределением по кафедрам и часами
-              самостоятельной работы утверждается ежегодно в мае.
-            </p>
-            <div style="display: flex; gap: 12px; flex-wrap: wrap">
-              <a href="#" class="btn btn--ghost">Учебный план, PDF</a>
-              <a href="https://math.msu.ru/lesson_schedule" class="btn btn--primary"
-                >Расписание
-                <span class="btn__arrow" aria-hidden="true">→</span></a
-              >
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="admission">
-        <div class="container">
-          <div class="sec-head rv">
-            <div>
-              <p class="eyebrow">§ 04 — Отбор</p>
-              <h2 class="h2">Как попасть<br />в спецпоток</h2>
-            </div>
-            <p class="lead">
-              Отбор проходит среди студентов, зачисленных на первый курс
-              мехмата. Отдельного конкурса ЕГЭ для потока нет — есть заявление и
-              устное собеседование.
-            </p>
-          </div>
-
-          <div class="adm">
-            <ol class="steps rv">
-              <li class="step">
-                <div class="step__n">01</div>
-                <div class="step__when">июнь — июль 2027</div>
-                <h3>Поступление на мехмат</h3>
-                <p>
-                  ЕГЭ по математике, физике (или информатике) и русскому языку
-                  плюс дополнительное вступительное испытание по математике.
-                  Призёры олимпиад поступают в рамках особых прав.
-                </p>
-              </li>
-              <li class="step">
-                <div class="step__n">02</div>
-                <div class="step__when">до 25 августа</div>
-                <h3>Заявление на спецпоток</h3>
-                <p>
-                  Короткая анкета: олимпиадный опыт, решённые задачи,
-                  интересующие разделы. Победители Всероса и олимпиады
-                  «Ломоносов» по математике проходят собеседование вне конкурса.
-                </p>
-              </li>
-              <li class="step">
-                <div class="step__n">03</div>
-                <div class="step__when">3 — 5 сентября</div>
-                <h3>Устное собеседование</h3>
-                <p>
-                  Две задачи по элементарной математике с обсуждением у доски:
-                  важнее ход рассуждения, чем скорость. Длительность — около 30
-                  минут.
-                </p>
-              </li>
-              <li class="step">
-                <div class="step__n">04</div>
-                <div class="step__when">сентябрь</div>
-                <h3>Зачисление и первый листок</h3>
-                <p>
-                  Списки вывешиваются на сайте и в учебной части. В первую
-                  неделю — установочная встреча с руководителем и распределение
-                  по семинарским группам.
-                </p>
-              </li>
-            </ol>
-
-            <aside class="aside-card rv">
-              <h3>Ключевые даты</h3>
-              <ul class="dates">
-                <li>
-                  <b>ноя 2026</b
-                  ><span
-                    >Старт подготовительных курсов и открытого семинара
-                    задач</span
-                  >
-                </li>
-                <li>
-                  <b>фев 2027</b
-                  ><span>Олимпиада «Ломоносов», отборочный этап</span>
-                </li>
-                <li>
-                  <b>20 июн</b><span>Начало приёма документов на мехмат</span>
-                </li>
-                <li><b>25 авг</b><span>Дедлайн анкеты спецпотока</span></li>
-                <li><b>3–5 сен</b><span>Собеседования</span></li>
-                <li><b>10 сен</b><span>Установочное собрание потока</span></li>
-              </ul>
-              <a href="#contacts" class="btn btn--primary"
-                >Записаться на семинар
-                <span class="btn__arrow" aria-hidden="true">→</span></a
-              >
-            </aside>
-          </div>
-
-          <div class="req">
-            <div class="rv">
-              <h4>Что нужно знать</h4>
-              <p>
-                Уверенная школьная алгебра, начала анализа, планиметрия и
-                стереометрия. Комбинаторика и теория чисел — плюс, но не
-                обязательны.
-              </p>
-            </div>
-            <div class="rv">
-              <h4>Нагрузка</h4>
-              <p>
-                На 6–8 часов в неделю выше базового потока. Совмещать с работой
-                на первом курсе не рекомендуется.
-              </p>
-            </div>
-            <div class="rv">
-              <h4>Перевод внутри потока</h4>
-              <p>
-                Перейти в спецпоток можно после 1-го и 3-го семестров при сдаче
-                разницы; вернуться в общий поток — в любой момент.
-              </p>
-            </div>
-          </div>
-
-          <div class="faq rv">
-            <p class="eyebrow">Частые вопросы</p>
-            <div class="faq__list" id="faq"></div>
-          </div>
-        </div>
-      </section>
-
-      <section class="section section--alt" id="contacts">
-        <div class="container">
-          <div class="sec-head rv">
-            <div>
-              <p class="eyebrow">§ 05 — Связь</p>
-              <h2 class="h2">Контакты<br />и обращения</h2>
-            </div>
-            <p class="lead">
-              Пишите по любым вопросам: отбор, программа, переводы,
-              сотрудничество и научные проекты для студентов потока.
-            </p>
-          </div>
-
-          <div class="contacts">
-            <div class="rv">
-              <ul class="c-list">
-                <li>
-                  <span class="k">Адрес</span
-                  ><span class="v"
-                    >119991, Москва, Ленинские горы, д. 1,<br />ГЗ МГУ, мехмат,
-                    ауд. 13-24<small
-                      >Учебная часть спецпотока, 13-й этаж</small
-                    ></span
-                  >
-                </li>
-                <li>
-                  <span class="k">Почта</span
-                  ><span class="v"
-                    ><a href="mailto:specpotok@math.msu.ru"
-                      >specpotok@math.msu.ru</a
-                    ><small>Ответ в течение 2–3 рабочих дней</small></span
-                  >
-                </li>
-                <li>
-                  <span class="k">Телефон</span
-                  ><span class="v"
-                    ><a href="tel:+74959391000">+7 (495) 939-10-00</a
-                    ><small>Пн–пт, 10:00–17:00</small></span
-                  >
-                </li>
-                <li>
-                  <span class="k">Telegram</span
-                  ><span class="v"
-                    ><a href="#" rel="noopener">@specpotok_msu</a
-                    ><small>Анонсы семинаров и листков</small></span
-                  >
-                </li>
-                <li>
-                  <span class="k">Приём</span
-                  ><span class="v"
-                    >Вторник и четверг, 15:00–17:00<small
-                      >Вне семестра — по предварительной договорённости</small
-                    ></span
-                  >
-                </li>
-                <li>
-                  <span class="k">Как пройти</span
-                  ><span class="v"
-                    >Сектор «Б» главного здания, лифт до 13-го этажа. При себе —
-                    пропуск или студенческий билет.</span
-                  >
-                </li>
-              </ul>
-            </div>
-
-            <div class="form-card rv">
-              <form id="form" novalidate>
-                <h3>Написать сообщение</h3>
-                <p>
-                  Форма уходит в учебную часть потока. Для срочных вопросов
-                  используйте телефон.
-                </p>
-
-                <div class="grid2">
-                  <div class="field" id="f-name">
-                    <label for="name"
-                      >Имя и фамилия <span aria-hidden="true">*</span></label
-                    >
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      autocomplete="name"
-                      placeholder="Анна Иванова"
-                    />
-                    <div class="err">Пожалуйста, представьтесь</div>
-                  </div>
-                  <div class="field" id="f-email">
-                    <label for="email"
-                      >E-mail <span aria-hidden="true">*</span></label
-                    >
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      autocomplete="email"
-                      placeholder="anna@example.com"
-                    />
-                    <div class="err">Проверьте адрес почты</div>
-                  </div>
+<html lang="ru" class="scroll-smooth">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>ФММП — Фундаментальная математика и математическая физика | Академическая программа</title>
+        <meta name="description" content="Научно-образовательная программа по фундаментальной математике и математической физике: учебный план, научные направления, семинары, преподаватели и условия поступления."/>
+        <!-- Google Fonts: Inter & Merriweather (с поддержкой кириллицы) -->
+        <link rel="preconnect" href="https://fonts.googleapis.com"/>
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet"/>
+        <!-- Tailwind CSS CDN -->
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: {
+              950: '#081838',
+              900: '#0d244f',
+              800: '#163a78',
+              700: '#1e4b99',
+              600: '#2563eb'
+            },
+            ice: {
+              50: '#f8fafd',
+              100: '#f5f7fb',
+              200: '#e8eef7'
+            },
+            gold: {
+              400: '#d8b058',
+              500: '#c89b3c',
+              600: '#a97e26'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+            serif: ['Merriweather', 'Georgia', 'serif']
+          },
+          boxShadow: {
+            academic: '0 10px 30px -12px rgba(13, 36, 79, 0.12)',
+            card: '0 4px 20px -4px rgba(13, 36, 79, 0.07)'
+          }
+        }
+      }
+    };
+  </script>
+        <style>/* Плавное раскрытие аккордеонов и программ курсов */.accordion-content { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.28s ease-out; } .accordion-content.open { grid-template-rows: 1fr; } .accordion-inner { overflow: hidden; } /* Плавное появление модальных окон */@keyframes modalFadeIn { from {  opacity: 0;  transform: translateY(10px) scale(0.98); }  to {  opacity: 1;  transform: translateY(0) scale(1); } } .modal-animate { animation: modalFadeIn 0.22s ease-out forwards; }</style>
+    </head>
+    <body class="bg-white text-slate-800 font-sans antialiased overflow-x-hidden selection:bg-navy-800 selection:text-white">
+        <!-- ==================== 1. ЛИПКАЯ ВЕРХНЯЯ НАВИГАЦИЯ ==================== -->
+        <header id="site-header" class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 transition-shadow duration-200">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between h-20 gap-4">
+                    <!-- Логотип и название программы (легко заменить на собственную эмблему) -->
+                    <a href="#top" class="flex items-center gap-3 group shrink-0 focus:outline-none"> <div class="w-11 h-11 rounded-xl bg-navy-900 flex items-center justify-center shadow-sm group-hover:bg-navy-800 transition-colors">
+                            <!-- Минималистичная академическая SVG-эмблема: орбиты и математическая решётка -->
+                            <svg class="w-7 h-7" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <rect x="4" y="4" width="28" height="28" rx="6" stroke="#c89b3c" stroke-width="1.4" stroke-opacity="0.85"/>
+                                <ellipse cx="18" cy="18" rx="11" ry="4.8" transform="rotate(-35 18 18)" stroke="#ffffff" stroke-width="1.5"/>
+                                <ellipse cx="18" cy="18" rx="11" ry="4.8" transform="rotate(35 18 18)" stroke="#93c5fd" stroke-width="1.4"/>
+                                <circle cx="18" cy="18" r="2.4" fill="#c89b3c"/>
+                            </svg>
+                        </div> <div class="leading-tight">
+                            <span class="block text-[11px] uppercase tracking-[0.14em] font-semibold text-gold-600">
+              Академическая программа </span>
+                            <span class="block font-serif font-bold text-base sm:text-lg text-navy-900 tracking-tight">
+              ФММП <span class="font-sans font-normal text-slate-400 text-xs align-middle ml-0.5">— шаблон</span> </span>
+                        </div> </a>
+                    <!-- Десктопное меню -->
+                    <nav class="hidden xl:flex items-center gap-1" aria-label="Основная навигация">
+                        <a href="#about" class="px-3 py-2 text-sm font-medium text-slate-700 hover:text-navy-900 hover:bg-ice-100 rounded-lg transition-colors">О программе</a>
+                        <a href="#tracks" class="px-3 py-2 text-sm font-medium text-slate-700 hover:text-navy-900 hover:bg-ice-100 rounded-lg transition-colors">Направления</a>
+                        <a href="#curriculum" class="px-3 py-2 text-sm font-medium text-slate-700 hover:text-navy-900 hover:bg-ice-100 rounded-lg transition-colors">Учебный план</a>
+                        <a href="#news" class="px-3 py-2 text-sm font-medium text-slate-700 hover:text-navy-900 hover:bg-ice-100 rounded-lg transition-colors">Семинары и новости</a>
+                        <a href="#faculty" class="px-3 py-2 text-sm font-medium text-slate-700 hover:text-navy-900 hover:bg-ice-100 rounded-lg transition-colors">Преподаватели</a>
+                        <a href="#admissions" class="px-3 py-2 text-sm font-medium text-slate-700 hover:text-navy-900 hover:bg-ice-100 rounded-lg transition-colors">Поступающим</a>
+                        <a href="#contacts" class="px-3 py-2 text-sm font-medium text-slate-700 hover:text-navy-900 hover:bg-ice-100 rounded-lg transition-colors">Контакты</a>
+                    </nav>
+                    <!-- Правые действия: поиск, кнопка заявки, бургер-меню -->
+                    <div class="flex items-center gap-2 sm:gap-3">
+                        <button id="open-search-btn" type="button" class="p-2.5 rounded-xl text-slate-600 hover:text-navy-900 hover:bg-ice-100 border border-transparent hover:border-slate-200 transition-colors" aria-label="Быстрый поиск по сайту" title="Поиск курсов, семинаров и преподавателей">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z"/>
+                            </svg>
+                        </button>
+                        <button type="button" data-open-apply class="hidden sm:inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-navy-900 hover:bg-navy-800 text-white text-sm font-semibold shadow-sm transition-all active:scale-[0.99]">
+                            <span>Подать заявку</span>
+                            <svg class="w-4 h-4 text-gold-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
+                            </svg>
+                        </button>
+                        <button id="mobile-menu-btn" type="button" class="xl:hidden p-2.5 rounded-xl text-navy-900 bg-ice-100 hover:bg-ice-200 transition-colors" aria-label="Открыть меню навигации" aria-expanded="false" aria-controls="mobile-drawer">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/>
+                            </svg>
+                        </button>
+                    </div>
                 </div>
-
-                <div class="field" id="f-topic">
-                  <label for="topic"
-                    >Тема обращения <span aria-hidden="true">*</span></label
-                  >
-                  <select id="topic" name="topic">
-                    <option value="">Выберите тему…</option>
-                    <option>Поступление и отбор</option>
-                    <option>Программа и учебный план</option>
-                    <option>Перевод в спецпоток / из потока</option>
-                    <option>Научный семинар и руководитель</option>
-                    <option>Сотрудничество и приглашение лектора</option>
-                    <option>Другое</option>
-                  </select>
-                  <div class="err">Выберите тему</div>
-                </div>
-
-                <div class="field" id="f-msg">
-                  <label for="msg"
-                    >Сообщение <span aria-hidden="true">*</span></label
-                  >
-                  <textarea
-                    id="msg"
-                    name="message"
-                    placeholder="Коротко опишите вопрос. Если вы абитуриент — укажите класс/школу и олимпиадный опыт."
-                  ></textarea>
-                  <div class="err">
-                    Напишите хотя бы пару предложений (от 15 символов)
-                  </div>
-                </div>
-
-                <label class="check" id="f-agree">
-                  <input type="checkbox" id="agree" />
-                  <span
-                    >Согласен(-на) на обработку персональных данных для ответа
-                    на обращение.</span
-                  >
-                </label>
-
-                <button
-                  type="submit"
-                  class="btn btn--primary"
-                  style="width: 100%; justify-content: center"
-                >
-                  Отправить сообщение
-                  <span class="btn__arrow" aria-hidden="true">→</span>
+            </div>
+        </header>
+        <!-- Мобильное выдвижное меню (Drawer) -->
+        <div id="mobile-drawer-overlay" class="fixed inset-0 z-50 bg-navy-950/60 backdrop-blur-sm hidden transition-opacity" aria-hidden="true"></div>
+        <aside id="mobile-drawer" class="fixed top-0 right-0 z-50 h-full w-80 max-w-[85vw] bg-white shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col" aria-label="Мобильное меню">
+            <div class="flex items-center justify-between px-6 py-5 border-b border-slate-200">
+                <div class="font-serif font-bold text-navy-900 text-lg">Навигация</div>
+                <button id="close-mobile-menu" type="button" class="p-2 rounded-xl text-slate-500 hover:text-navy-900 hover:bg-ice-100" aria-label="Закрыть меню">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
                 </button>
-              </form>
-
-              <div class="form-ok" id="formOk" role="status">
-                <div class="form-ok__i" aria-hidden="true">✓</div>
-                <h3>Сообщение отправлено</h3>
-                <p>
-                  Спасибо! Мы ответим на указанную почту в течение 2–3 рабочих
-                  дней.
-                </p>
-                <button class="btn btn--dark" id="again" type="button">
-                  Написать ещё раз
-                </button>
-              </div>
             </div>
-          </div>
+            <nav class="flex-1 overflow-y-auto px-4 py-4 space-y-1">
+                <a href="#about" class="mobile-nav-link block px-4 py-3 rounded-xl text-base font-medium text-slate-800 hover:bg-ice-100 hover:text-navy-900">О программе</a>
+                <a href="#tracks" class="mobile-nav-link block px-4 py-3 rounded-xl text-base font-medium text-slate-800 hover:bg-ice-100 hover:text-navy-900">Научные направления</a>
+                <a href="#curriculum" class="mobile-nav-link block px-4 py-3 rounded-xl text-base font-medium text-slate-800 hover:bg-ice-100 hover:text-navy-900">Учебный план</a>
+                <a href="#news" class="mobile-nav-link block px-4 py-3 rounded-xl text-base font-medium text-slate-800 hover:bg-ice-100 hover:text-navy-900">Семинары и новости</a>
+                <a href="#faculty" class="mobile-nav-link block px-4 py-3 rounded-xl text-base font-medium text-slate-800 hover:bg-ice-100 hover:text-navy-900">Преподаватели</a>
+                <a href="#admissions" class="mobile-nav-link block px-4 py-3 rounded-xl text-base font-medium text-slate-800 hover:bg-ice-100 hover:text-navy-900">Поступающим</a>
+                <a href="#contacts" class="mobile-nav-link block px-4 py-3 rounded-xl text-base font-medium text-slate-800 hover:bg-ice-100 hover:text-navy-900">Контакты</a>
+            </nav>
+            <div class="p-5 border-t border-slate-200 bg-ice-50">
+                <button type="button" data-open-apply class="w-full py-3 px-4 rounded-xl bg-navy-900 hover:bg-navy-800 text-white font-semibold text-sm shadow-sm transition-colors">
+                    Подать заявку / Задать вопрос
+</button>
+            </div>
+        </aside>
+        <main id="top">
+            <!-- ==================== 2. HERO-СЕКЦИЯ ==================== -->
+            <section class="relative overflow-hidden bg-gradient-to-br from-navy-950 via-navy-900 to-navy-800 text-white">
+                <!-- Деликатный математический геометрический SVG-фон (сетка и эквипотенциальные линии) -->
+                <div class="absolute inset-0 pointer-events-none select-none overflow-hidden" aria-hidden="true">
+                    <svg class="w-full h-full opacity-[0.14]" viewBox="0 0 1440 720" fill="none" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <pattern id="math-grid" width="48" height="48" patternUnits="userSpaceOnUse">
+                                <path d="M 48 0 L 0 0 0 48" fill="none" stroke="#93c5fd" stroke-width="0.6"/>
+                            </pattern>
+                        </defs>
+                        <rect width="1440" height="720" fill="url(#math-grid)"/>
+                        <!-- Геометрические контуры / траектории фазового пространства -->
+                        <g stroke="#c89b3c" stroke-width="1.2" opacity="0.65">
+                            <ellipse cx="1160" cy="240" rx="340" ry="150" transform="rotate(-18 1160 240)"/>
+                            <ellipse cx="1160" cy="240" rx="250" ry="108" transform="rotate(-18 1160 240)"/>
+                            <ellipse cx="1160" cy="240" rx="160" ry="68" transform="rotate(-18 1160 240)"/>
+                        </g>
+                        <g stroke="#bfdbfe" stroke-width="1" opacity="0.5">
+                            <path d="M -80 540 C 260 390, 520 670, 920 470 C 1180 340, 1340 420, 1540 290"/>
+                            <path d="M -80 590 C 280 440, 540 710, 940 520 C 1200 395, 1360 470, 1540 345"/>
+                            <circle cx="1160" cy="240" r="4" fill="#c89b3c"/>
+                            <circle cx="920" cy="470" r="3" fill="#ffffff"/>
+                        </g>
+                    </svg>
+                    <div class="absolute inset-0 bg-gradient-to-t from-navy-950/70 via-transparent to-navy-950/30"></div>
+                </div>
+                <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-16 sm:pt-20 sm:pb-20 lg:pt-24 lg:pb-24">
+                    <div class="max-w-4xl">
+                        <!-- Академический бейдж -->
+                        <div class="inline-flex flex-wrap items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/15 backdrop-blur-sm mb-6">
+                            <span class="w-2 h-2 rounded-full bg-gold-400"></span>
+                            <span class="text-xs sm:text-sm font-medium tracking-wide text-blue-100">
+              Научно-образовательная программа (совместно с Росатомом) &middot; Набор 2027</span>
+                        </div>
+                        <!-- Главный заголовок -->
+                        <h1 class="font-serif text-3xl sm:text-5xl lg:text-[3.35rem] font-bold leading-[1.16] tracking-tight text-white">Вычислительная математика и математическое моделирование физических процессов</h1>
+                        <!-- Краткая миссия программы -->
+                        <p class="mt-6 text-base sm:text-lg lg:text-xl text-blue-100/90 leading-relaxed max-w-3xl font-light">
+            Углублённая университетская подготовка нового поколения исследователей на стыке современной чистой математики, теоретической физики и вычислительных методов. Раннее включение в научную работу, авторские спецкурсы и еженедельные семинары ведущих учёных. </p>
+                        <!-- Компактные теги формата обучения -->
+                        <div class="mt-6 flex flex-wrap gap-2.5 text-xs sm:text-sm text-blue-100">
+                            <span class="px-3 py-1 rounded-lg bg-white/10 border border-white/10">Очная форма · 6 лет (специалитет)</span>
+                            <span class="px-3 py-1 rounded-lg bg-white/10 border border-white/10">25 бюджетных мест</span>
+                            <span class="px-3 py-1 rounded-lg bg-white/10 border border-white/10">ЕГЭ + ДВИ по математике</span>
+                        </div>
+                        <!-- Кнопки действий -->
+                        <div class="mt-9 flex flex-col sm:flex-row gap-3.5 sm:items-center">
+                            <button type="button" data-open-apply class="inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl bg-gold-500 hover:bg-gold-400 text-navy-950 font-semibold text-base shadow-lg shadow-navy-950/30 transition-all active:scale-[0.99]">
+                                <span>Поступить на программу</span>
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
+                                </svg>
+                            </button>
+                            <a href="#curriculum" class="inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/25 font-medium text-base backdrop-blur-sm transition-colors"> <span>Смотреть учебный план</span> <svg class="w-4 h-4 text-blue-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/>
+                                </svg> </a>
+                        </div>
+                    </div>
+                    <!-- 4-колоночная полоса ключевых показателей -->
+                    <div class="mt-14 pt-8 border-t border-white/15 grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+                        <div class="p-4 sm:p-5 rounded-2xl bg-white/[0.06] border border-white/10 backdrop-blur-sm">
+                            <div class="font-serif text-2xl sm:text-3xl font-bold text-gold-400">40+</div>
+                            <div class="mt-1 text-xs sm:text-sm text-blue-100/90 leading-snug">модернизированных базовых курсов и спецкурсов</div>
+                        </div>
+                        <div class="p-4 sm:p-5 rounded-2xl bg-white/[0.06] border border-white/10 backdrop-blur-sm">
+                            <div class="font-serif text-2xl sm:text-3xl font-bold text-gold-400">25+</div>
+                            <div class="mt-1 text-xs sm:text-sm text-blue-100/90 leading-snug">преподавателей-исследователей и профессоров РАН</div>
+                        </div>
+                        <div class="p-4 sm:p-5 rounded-2xl bg-white/[0.06] border border-white/10 backdrop-blur-sm">
+                            <div class="font-serif text-2xl sm:text-3xl font-bold text-gold-400">6</div>
+                            <div class="mt-1 text-xs sm:text-sm text-blue-100/90 leading-snug">ключевых научных направлений специализации</div>
+                        </div>
+                        <div class="p-4 sm:p-5 rounded-2xl bg-white/[0.06] border border-white/10 backdrop-blur-sm">
+                            <div class="font-serif text-2xl sm:text-3xl font-bold text-gold-400">Еженедельно</div>
+                            <div class="mt-1 text-xs sm:text-sm text-blue-100/90 leading-snug">открытые научные семинары, лекторий и коллоквиумы</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- ==================== 3. О ПРОГРАММЕ И ДОКУМЕНТЫ ==================== -->
+            <section id="about" class="scroll-mt-20 py-16 sm:py-24 bg-white">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+                        <!-- Левая колонка: концепция программы -->
+                        <div class="lg:col-span-7 space-y-6">
+                            <div>
+                                <span class="text-xs font-bold uppercase tracking-[0.16em] text-gold-600">О программе</span>
+                                <h2 class="mt-2 font-serif text-2xl sm:text-4xl font-bold text-navy-900 leading-tight">
+                Кого и зачем здесь учат </h2>
+                            </div>
+                            <p class="text-base sm:text-lg text-slate-700 leading-relaxed">
+              Программа рассчитана на высокомотивированных студентов, стремящихся объединить строгую культуру фундаментальной математики с пониманием языка и задач современной теоретической физики. </p>
+                            <p class="text-base text-slate-600 leading-relaxed">
+              Ядро учебного плана составляют обновлённые фундаментальные курсы анализа, алгебры, геометрии, топологии и уравнений математической физики, дополненные современными разделами квантовой механики, теории поля и методов анализа данных. Научная специализация и работа с научным руководителем начинаются уже со второго курса. </p>
+                            <!-- Три ключевых преимущества -->
+                            <div class="grid sm:grid-cols-3 gap-4 pt-2">
+                                <div class="p-4 rounded-2xl bg-ice-100 border border-slate-200/70">
+                                    <div class="w-9 h-9 rounded-xl bg-navy-900 text-gold-400 flex items-center justify-center mb-3">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25"/>
+                                        </svg>
+                                    </div>
+                                    <h3 class="font-semibold text-navy-900 text-sm">Авторские курсы</h3>
+                                    <p class="mt-1 text-xs text-slate-600 leading-relaxed">Программы читают действующие исследователи из ведущих научных центров.</p>
+                                </div>
+                                <div class="p-4 rounded-2xl bg-ice-100 border border-slate-200/70">
+                                    <div class="w-9 h-9 rounded-xl bg-navy-900 text-gold-400 flex items-center justify-center mb-3">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342"/>
+                                        </svg>
+                                    </div>
+                                    <h3 class="font-semibold text-navy-900 text-sm">Ранний вход в науку</h3>
+                                    <p class="mt-1 text-xs text-slate-600 leading-relaxed">Курсовые работы, исследовательские группы и грантовая поддержка со 2 курса.</p>
+                                </div>
+                                <div class="p-4 rounded-2xl bg-ice-100 border border-slate-200/70">
+                                    <div class="w-9 h-9 rounded-xl bg-navy-900 text-gold-400 flex items-center justify-center mb-3">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5"/>
+                                        </svg>
+                                    </div>
+                                    <h3 class="font-semibold text-navy-900 text-sm">Широкие перспективы</h3>
+                                    <p class="mt-1 text-xs text-slate-600 leading-relaxed">Карьера в академических институтах, R&amp;D, IT, квант-финансах и DeepTech.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Правая колонка: Документы и положения (интерактивный предпросмотр) -->
+                        <div class="lg:col-span-5">
+                            <div class="rounded-2xl bg-ice-100 border border-slate-200/90 p-6 sm:p-7 shadow-card">
+                                <div class="flex items-center justify-between gap-2 pb-4 border-b border-slate-200">
+                                    <div>
+                                        <h3 class="font-serif font-bold text-lg text-navy-900">Документы и положения</h3>
+                                        <p class="text-xs text-slate-500 mt-0.5">Нажмите на документ для быстрого ознакомления</p>
+                                    </div>
+                                    <span class="px-2.5 py-1 rounded-lg bg-navy-900/5 text-navy-900 text-xs font-semibold">PDF / Сводка</span>
+                                </div>
+                                <ul class="mt-4 space-y-2.5" id="documents-list">
+                                    <!-- Заполняется и обрабатывается через JS -->
+                                </ul>
+                                <div class="mt-5 pt-4 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500">
+                                    <span>Обновлено к набору 2026/2027</span>
+                                    <a href="#admissions" class="font-semibold text-navy-600 hover:text-navy-900 transition-colors">Условия приёма →</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- ==================== НАУЧНЫЕ НАПРАВЛЕНИЯ (6 КАРТОЧЕК) ==================== -->
+            <section id="tracks" class="scroll-mt-20 py-16 sm:py-24 bg-ice-100 border-y border-slate-200/70">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="max-w-3xl">
+                        <span class="text-xs font-bold uppercase tracking-[0.16em] text-gold-600">Специализация и исследования</span>
+                        <h2 class="mt-2 font-serif text-2xl sm:text-4xl font-bold text-navy-900">Научные направления</h2>
+                        <p class="mt-3 text-slate-600 text-base">
+            Студенты формируют индивидуальную образовательную траекторию, выбирая спецкурсы и исследовательские семинары в одном или нескольких направлениях. </p>
+                    </div>
+                    <div class="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Направление 1 -->
+                        <article class="group bg-white rounded-2xl p-6 border border-slate-200/80 shadow-card hover:shadow-academic hover:border-navy-600/30 transition-all">
+                            <div class="w-12 h-12 rounded-xl bg-navy-900 text-gold-400 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24">
+                                    <circle cx="12" cy="12" r="2.2"/>
+                                    <ellipse cx="12" cy="12" rx="9" ry="3.8" transform="rotate(35 12 12)"/>
+                                    <ellipse cx="12" cy="12" rx="9" ry="3.8" transform="rotate(-35 12 12)"/>
+                                </svg>
+                            </div>
+                            <h3 class="font-serif text-lg font-bold text-navy-900">Математическая физика</h3>
+                            <p class="mt-2.5 text-sm text-slate-600 leading-relaxed">
+              Интегрируемые системы, квазиклассические асимптотики, калибровочные теории, квантовая теория поля и спектральный анализ операторов. </p>
+                            <div class="mt-4 pt-4 border-t border-slate-100 flex flex-wrap gap-1.5">
+                                <span class="px-2.5 py-1 rounded-md bg-ice-100 text-navy-800 text-xs font-medium">Квантовая механика</span>
+                                <span class="px-2.5 py-1 rounded-md bg-ice-100 text-navy-800 text-xs font-medium">Теория поля</span>
+                            </div>
+                        </article>
+                        <!-- Направление 2 -->
+                        <article class="group bg-white rounded-2xl p-6 border border-slate-200/80 shadow-card hover:shadow-academic hover:border-navy-600/30 transition-all">
+                            <div class="w-12 h-12 rounded-xl bg-navy-900 text-gold-400 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9"/>
+                                </svg>
+                            </div>
+                            <h3 class="font-serif text-lg font-bold text-navy-900">Геометрия и топология</h3>
+                            <p class="mt-2.5 text-sm text-slate-600 leading-relaxed">
+              Дифференциальная и симплектическая геометрия, алгебраическая топология, римановы поверхности, теория узлов и инварианты гладких многообразий. </p>
+                            <div class="mt-4 pt-4 border-t border-slate-100 flex flex-wrap gap-1.5">
+                                <span class="px-2.5 py-1 rounded-md bg-ice-100 text-navy-800 text-xs font-medium">Многообразия</span>
+                                <span class="px-2.5 py-1 rounded-md bg-ice-100 text-navy-800 text-xs font-medium">Топология</span>
+                            </div>
+                        </article>
+                        <!-- Направление 3 -->
+                        <article class="group bg-white rounded-2xl p-6 border border-slate-200/80 shadow-card hover:shadow-academic hover:border-navy-600/30 transition-all">
+                            <div class="w-12 h-12 rounded-xl bg-navy-900 text-gold-400 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 17c3-8 6-8 9 0s6 8 9 0"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 12h18" stroke-dasharray="2 3"/>
+                                </svg>
+                            </div>
+                            <h3 class="font-serif text-lg font-bold text-navy-900">Дифференциальные уравнения</h3>
+                            <p class="mt-2.5 text-sm text-slate-600 leading-relaxed">
+              Нелинейные уравнения в частных производных, динамические системы, обратные задачи, эллиптические операторы и теорема об индексе. </p>
+                            <div class="mt-4 pt-4 border-t border-slate-100 flex flex-wrap gap-1.5">
+                                <span class="px-2.5 py-1 rounded-md bg-ice-100 text-navy-800 text-xs font-medium">УМФ и ОДУ</span>
+                                <span class="px-2.5 py-1 rounded-md bg-ice-100 text-navy-800 text-xs font-medium">Динамика</span>
+                            </div>
+                        </article>
+                        <!-- Направление 4 -->
+                        <article class="group bg-white rounded-2xl p-6 border border-slate-200/80 shadow-card hover:shadow-academic hover:border-navy-600/30 transition-all">
+                            <div class="w-12 h-12 rounded-xl bg-navy-900 text-gold-400 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 6.75h15m-15 10.5h15M9 3.75l-1.5 16.5m9-16.5L15 20.25"/>
+                                </svg>
+                            </div>
+                            <h3 class="font-serif text-lg font-bold text-navy-900">Алгебра и теория чисел</h3>
+                            <p class="mt-2.5 text-sm text-slate-600 leading-relaxed">
+              Группы и алгебры Ли, теория представлений, алгебраическая геометрия, теория Галуа, модулярные формы и аналитическая теория чисел. </p>
+                            <div class="mt-4 pt-4 border-t border-slate-100 flex flex-wrap gap-1.5">
+                                <span class="px-2.5 py-1 rounded-md bg-ice-100 text-navy-800 text-xs font-medium">Теория Ли</span>
+                                <span class="px-2.5 py-1 rounded-md bg-ice-100 text-navy-800 text-xs font-medium">Арифметика</span>
+                            </div>
+                        </article>
+                        <!-- Направление 5 -->
+                        <article class="group bg-white rounded-2xl p-6 border border-slate-200/80 shadow-card hover:shadow-academic hover:border-navy-600/30 transition-all">
+                            <div class="w-12 h-12 rounded-xl bg-navy-900 text-gold-400 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 19c3.5 0 5-13 9-13s5.5 13 9 13"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v13" stroke-dasharray="2 2"/>
+                                </svg>
+                            </div>
+                            <h3 class="font-serif text-lg font-bold text-navy-900">Теория вероятностей</h3>
+                            <p class="mt-2.5 text-sm text-slate-600 leading-relaxed">
+              Случайные процессы, стохастический анализ, статистическая механика, случайные матрицы и предельные теоремы в больших размерностях. </p>
+                            <div class="mt-4 pt-4 border-t border-slate-100 flex flex-wrap gap-1.5">
+                                <span class="px-2.5 py-1 rounded-md bg-ice-100 text-navy-800 text-xs font-medium">Стохастика</span>
+                                <span class="px-2.5 py-1 rounded-md bg-ice-100 text-navy-800 text-xs font-medium">Статмеханика</span>
+                            </div>
+                        </article>
+                        <!-- Направление 6 -->
+                        <article class="group bg-white rounded-2xl p-6 border border-slate-200/80 shadow-card hover:shadow-academic hover:border-navy-600/30 transition-all">
+                            <div class="w-12 h-12 rounded-xl bg-navy-900 text-gold-400 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 3v1.5M4.5 8.25H3m18 0h-1.5M4.5 12H3m18 0h-1.5m-15 3.75H3m18 0h-1.5M8.25 19.5V21M12 3v1.5m0 15V21m3.75-18v1.5m0 15V21m-9-1.5h10.5a2.25 2.25 0 002.25-2.25V6.75a2.25 2.25 0 00-2.25-2.25H6.75A2.25 2.25 0 004.5 6.75v10.5a2.25 2.25 0 002.25 2.25z"/>
+                                </svg>
+                            </div>
+                            <h3 class="font-serif text-lg font-bold text-navy-900">Вычислительные методы</h3>
+                            <p class="mt-2.5 text-sm text-slate-600 leading-relaxed">
+              Численное моделирование физических процессов, математические основы глубокого обучения, формальная верификация доказательств (Lean) и анализ данных. </p>
+                            <div class="mt-4 pt-4 border-t border-slate-100 flex flex-wrap gap-1.5">
+                                <span class="px-2.5 py-1 rounded-md bg-ice-100 text-navy-800 text-xs font-medium">Анализ данных</span>
+                                <span class="px-2.5 py-1 rounded-md bg-ice-100 text-navy-800 text-xs font-medium">ИИ и Lean</span>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </section>
+            <!-- ==================== 4. УЧЕБНЫЙ ПЛАН (ИНТЕРАКТИВНЫЕ ВКЛАДКИ) ==================== -->
+            <section id="curriculum" class="scroll-mt-20 py-16 sm:py-24 bg-white">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+                        <div class="max-w-2xl">
+                            <span class="text-xs font-bold uppercase tracking-[0.16em] text-gold-600">Образовательная траектория</span>
+                            <h2 class="mt-2 font-serif text-2xl sm:text-4xl font-bold text-navy-900">Учебный план и курсы</h2>
+                            <p class="mt-3 text-slate-600 text-base">
+              Ознакомьтесь со структурой базовых дисциплин, спецкурсов и научных семинаров. Нажмите «Программа курса», чтобы раскрыть основные темы. </p>
+                        </div>
+                        <!-- Поиск внутри учебного плана -->
+                        <div class="w-full lg:w-72">
+                            <label for="course-search" class="sr-only">Поиск по курсам</label>
+                            <div class="relative">
+                                <input id="course-search" type="text" placeholder="Поиск курса или лектора..." class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 bg-ice-50 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-navy-600/30 focus:border-navy-600 transition"/>
+                                <svg class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Вкладки учебного плана -->
+                    <div class="mt-8 flex flex-wrap gap-2 border-b border-slate-200 pb-4" role="tablist" aria-label="Разделы учебного плана">
+                        <button type="button" role="tab" data-curriculum-tab="mandatory" aria-selected="true" class="curriculum-tab px-4 py-2.5 rounded-xl text-sm font-semibold transition-all bg-navy-900 text-white shadow-sm">
+                            Обязательные курсы
+</button>
+                        <button type="button" role="tab" data-curriculum-tab="special" aria-selected="false" class="curriculum-tab px-4 py-2.5 rounded-xl text-sm font-semibold transition-all bg-ice-100 text-slate-700 hover:bg-ice-200">
+                            Спецкурсы
+</button>
+                        <button type="button" role="tab" data-curriculum-tab="seminars" aria-selected="false" class="curriculum-tab px-4 py-2.5 rounded-xl text-sm font-semibold transition-all bg-ice-100 text-slate-700 hover:bg-ice-200">
+                            Научные семинары
+</button>
+                        <button type="button" role="tab" data-curriculum-tab="year12" aria-selected="false" class="curriculum-tab px-4 py-2.5 rounded-xl text-sm font-semibold transition-all bg-ice-100 text-slate-700 hover:bg-ice-200">
+                            1–2 курс
+</button>
+                        <button type="button" role="tab" data-curriculum-tab="year34" aria-selected="false" class="curriculum-tab px-4 py-2.5 rounded-xl text-sm font-semibold transition-all bg-ice-100 text-slate-700 hover:bg-ice-200">
+                            3–4 курс
+</button>
+                    </div>
+                    <!-- Заголовок таблицы для десктопа -->
+                    <div class="hidden md:grid grid-cols-12 gap-4 px-5 py-3 mt-6 rounded-t-2xl bg-ice-100 border border-slate-200 text-xs font-bold uppercase tracking-wider text-slate-500">
+                        <div class="col-span-5">Название дисциплины</div>
+                        <div class="col-span-3">Преподаватель</div>
+                        <div class="col-span-2">Семестр / Формат</div>
+                        <div class="col-span-2 text-right">Содержание</div>
+                    </div>
+                    <!-- Контейнер списка курсов -->
+                    <div id="courses-container" class="divide-y divide-slate-200 border border-slate-200 md:border-t-0 rounded-2xl md:rounded-t-none bg-white overflow-hidden shadow-card mt-4 md:mt-0">
+                        <!-- Рендерится динамически из JS -->
+                    </div>
+                    <p id="courses-empty" class="hidden mt-6 text-center py-10 rounded-2xl bg-ice-100 text-slate-500 text-sm">
+          По вашему запросу курсы не найдены. Попробуйте изменить фильтр или строку поиска. </p>
+                </div>
+            </section>
+            <!-- ==================== 5. НОВОСТИ И РАСПИСАНИЕ СЕМИНАРОВ ==================== -->
+            <section id="news" class="scroll-mt-20 py-16 sm:py-24 bg-ice-100 border-y border-slate-200/70">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-[0.16em] text-gold-600">Академическая жизнь</span>
+                            <h2 class="mt-2 font-serif text-2xl sm:text-4xl font-bold text-navy-900">Новости и расписание семинаров</h2>
+                        </div>
+                        <!-- Фильтры ленты -->
+                        <div class="flex flex-wrap gap-2" role="group" aria-label="Фильтр новостей и семинаров">
+                            <button type="button" data-news-filter="all" class="news-filter-btn px-4 py-2 rounded-xl text-sm font-semibold bg-navy-900 text-white shadow-sm transition-all">Все</button>
+                            <button type="button" data-news-filter="Семинары" class="news-filter-btn px-4 py-2 rounded-xl text-sm font-semibold bg-white text-slate-700 border border-slate-200 hover:border-navy-600/40 transition-all">Семинары</button>
+                            <button type="button" data-news-filter="Объявления" class="news-filter-btn px-4 py-2 rounded-xl text-sm font-semibold bg-white text-slate-700 border border-slate-200 hover:border-navy-600/40 transition-all">Объявления</button>
+                            <button type="button" data-news-filter="События" class="news-filter-btn px-4 py-2 rounded-xl text-sm font-semibold bg-white text-slate-700 border border-slate-200 hover:border-navy-600/40 transition-all">События</button>
+                        </div>
+                    </div>
+                    <!-- Сетка карточек новостей и семинаров -->
+                    <div id="news-grid" class="mt-10 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Рендерится из JS -->
+                    </div>
+                </div>
+            </section>
+            <!-- ==================== 6. ПРЕПОДАВАТЕЛИ И РУКОВОДИТЕЛИ ==================== -->
+            <section id="faculty" class="scroll-mt-20 py-16 sm:py-24 bg-white">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="max-w-3xl">
+                        <span class="text-xs font-bold uppercase tracking-[0.16em] text-gold-600">Научный совет и лекторы</span>
+                        <h2 class="mt-2 font-serif text-2xl sm:text-4xl font-bold text-navy-900">Преподаватели и руководители</h2>
+                        <p class="mt-3 text-slate-600 text-base">
+            Занятия и научные семинары ведут признанные специалисты в области алгебры, геометрии, анализа и математической физики. Ниже представлены демонстрационные карточки для заполнения состава вашей программы. </p>
+                    </div>
+                    <!-- Выделенный блок руководства программы -->
+                    <div class="mt-10 grid md:grid-cols-2 gap-6">
+                        <div class="rounded-2xl p-6 sm:p-7 bg-gradient-to-br from-navy-900 to-navy-800 text-white shadow-academic flex flex-col sm:flex-row gap-5 items-start sm:items-center">
+                            <div class="w-16 h-16 rounded-2xl bg-gold-500/20 border border-gold-400/50 flex items-center justify-center font-serif font-bold text-xl text-gold-400 shrink-0">
+                                АВ
+</div>
+                            <div>
+                                <span class="inline-block text-[11px] font-bold uppercase tracking-widest text-gold-400">Руководитель программы</span>
+                                <h3 class="mt-1 font-serif text-xl font-bold text-white">Академиков Виктор Николаевич</h3>
+                                <p class="mt-1 text-sm text-blue-100/90">д.ф.-м.н., академик РАН, профессор</p>
+                                <p class="mt-2 text-xs text-blue-200/80">Область интересов: дифференциальная геометрия, интегрируемые системы, математическая физика.</p>
+                            </div>
+                        </div>
+                        <div class="rounded-2xl p-6 sm:p-7 bg-ice-100 border border-slate-200 shadow-card flex flex-col sm:flex-row gap-5 items-start sm:items-center">
+                            <div class="w-16 h-16 rounded-2xl bg-navy-900 text-white flex items-center justify-center font-serif font-bold text-xl shrink-0">
+                                ЕК
+</div>
+                            <div>
+                                <span class="inline-block text-[11px] font-bold uppercase tracking-widest text-gold-600">Куратор и академический координатор</span>
+                                <h3 class="mt-1 font-serif text-xl font-bold text-navy-900">Краснова Елена Александровна</h3>
+                                <p class="mt-1 text-sm text-slate-600">к.ф.-м.н., координатор учебного процесса</p>
+                                <p class="mt-2 text-xs text-slate-500">Вопросы поступления, расписания спецкурсов и академической мобильности.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Сетка преподавателей -->
+                    <div id="faculty-grid" class="mt-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                        <!-- Рендерится из JS -->
+                    </div>
+                </div>
+            </section>
+            <!-- ==================== 7. ПОСТУПАЮЩИМ (ЭТАПЫ + FAQ) ==================== -->
+            <section id="admissions" class="scroll-mt-20 py-16 sm:py-24 bg-ice-100 border-y border-slate-200/70">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+                        <div class="max-w-2xl">
+                            <span class="text-xs font-bold uppercase tracking-[0.16em] text-gold-600">Приёмная кампания 2026</span>
+                            <h2 class="mt-2 font-serif text-2xl sm:text-4xl font-bold text-navy-900">Поступающим</h2>
+                            <p class="mt-3 text-slate-600 text-base">
+              Прозрачный порядок поступления на программу специалитета: от подачи документов до зачисления и выбора научного наставника. </p>
+                        </div>
+                        <button type="button" data-open-apply class="self-start lg:self-auto inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-navy-900 hover:bg-navy-800 text-white text-sm font-semibold shadow-sm transition-colors">
+                            <span>Задать вопрос приёмной комиссии</span>
+                            <svg class="w-4 h-4 text-gold-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <!-- 4-этапный таймлайн поступления -->
+                    <div class="mt-10 relative">
+                        <!-- Горизонтальная соединительная линия на десктопе -->
+                        <div class="hidden lg:block absolute top-8 left-12 right-12 h-0.5 bg-slate-300/80" aria-hidden="true"></div>
+                        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 relative">
+                            <div class="bg-white rounded-2xl p-6 border border-slate-200/90 shadow-card relative">
+                                <div class="w-11 h-11 rounded-xl bg-navy-900 text-gold-400 font-serif font-bold text-lg flex items-center justify-center shadow-sm">01</div>
+                                <span class="block mt-4 text-xs font-semibold uppercase tracking-wider text-navy-600">20 июня — 10 июля</span>
+                                <h3 class="mt-1 font-serif text-lg font-bold text-navy-900">Подача документов</h3>
+                                <p class="mt-2 text-sm text-slate-600 leading-relaxed">
+                Регистрация через личный кабинет абитуриента или очно в приёмной комиссии факультета с указанием направления ФММП. </p>
+                            </div>
+                            <div class="bg-white rounded-2xl p-6 border border-slate-200/90 shadow-card relative">
+                                <div class="w-11 h-11 rounded-xl bg-navy-900 text-gold-400 font-serif font-bold text-lg flex items-center justify-center shadow-sm">02</div>
+                                <span class="block mt-4 text-xs font-semibold uppercase tracking-wider text-navy-600">Июль 2026</span>
+                                <h3 class="mt-1 font-serif text-lg font-bold text-navy-900">Вступительное испытание</h3>
+                                <p class="mt-2 text-sm text-slate-600 leading-relaxed">
+                Учёт результатов ЕГЭ (математика, физика, русский язык) и сдача дополнительного вступительного испытания (ДВИ) по математике. </p>
+                            </div>
+                            <div class="bg-white rounded-2xl p-6 border border-slate-200/90 shadow-card relative">
+                                <div class="w-11 h-11 rounded-xl bg-navy-900 text-gold-400 font-serif font-bold text-lg flex items-center justify-center shadow-sm">03</div>
+                                <span class="block mt-4 text-xs font-semibold uppercase tracking-wider text-navy-600">Конец июля</span>
+                                <h3 class="mt-1 font-serif text-lg font-bold text-navy-900">Собеседование</h3>
+                                <p class="mt-2 text-sm text-slate-600 leading-relaxed">
+                Встреча с кураторами программы и преподавателями: обсуждение научных интересов, олимпиадного опыта и индивидуального плана. </p>
+                            </div>
+                            <div class="bg-white rounded-2xl p-6 border border-slate-200/90 shadow-card relative">
+                                <div class="w-11 h-11 rounded-xl bg-gold-500 text-navy-950 font-serif font-bold text-lg flex items-center justify-center shadow-sm">04</div>
+                                <span class="block mt-4 text-xs font-semibold uppercase tracking-wider text-gold-600">Начало августа</span>
+                                <h3 class="mt-1 font-serif text-lg font-bold text-navy-900">Зачисление</h3>
+                                <p class="mt-2 text-sm text-slate-600 leading-relaxed">
+                Публикация приказов о зачислении, выдача студенческих билетов, распределение по академическим группам и вводный лекторий. </p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Интерактивный FAQ-аккордеон -->
+                    <div class="mt-14 grid lg:grid-cols-12 gap-8 items-start">
+                        <div class="lg:col-span-4">
+                            <h3 class="font-serif text-2xl font-bold text-navy-900">Частые вопросы абитуриентов</h3>
+                            <p class="mt-2.5 text-sm text-slate-600 leading-relaxed">
+              Собрали ответы на ключевые вопросы об условиях обучения, стипендиях, экзаменах и поступлении для олимпиадников. </p>
+                            <div class="mt-6 p-5 rounded-2xl bg-navy-900 text-white">
+                                <div class="text-xs uppercase tracking-widest text-gold-400 font-semibold">Не нашли ответ?</div>
+                                <p class="mt-1.5 text-sm text-blue-100">Напишите нам напрямую — координатор программы отвечает в течение 1–2 рабочих дней.</p>
+                                <button type="button" data-open-apply class="mt-4 w-full py-2.5 px-4 rounded-xl bg-white text-navy-900 hover:bg-ice-100 text-sm font-semibold transition-colors">
+                                    Написать координатору
+</button>
+                            </div>
+                        </div>
+                        <div class="lg:col-span-8 space-y-3" id="faq-container">
+                            <!-- Рендерится из JS -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- ==================== 8. КОНТАКТЫ И ПАРТНЁРЫ ==================== -->
+            <section id="contacts" class="scroll-mt-20 py-16 sm:py-20 bg-white">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid lg:grid-cols-12 gap-8 items-stretch">
+                        <!-- Блок контактов -->
+                        <div class="lg:col-span-7 rounded-2xl bg-ice-100 border border-slate-200 p-6 sm:p-8 flex flex-col justify-between">
+                            <div>
+                                <span class="text-xs font-bold uppercase tracking-[0.16em] text-gold-600">Обратная связь</span>
+                                <h2 class="mt-2 font-serif text-2xl sm:text-3xl font-bold text-navy-900">Контакты учебного офиса</h2>
+                                <p class="mt-2 text-sm text-slate-600">
+                По вопросам учебного плана, расписания семинаров и поступления вы можете обратиться в офис программы или заполнить онлайн-форму. </p>
+                                <div class="mt-6 grid sm:grid-cols-2 gap-5">
+                                    <div class="p-4 rounded-xl bg-white border border-slate-200/80">
+                                        <div class="text-xs font-semibold uppercase tracking-wider text-slate-400">Адрес</div>
+                                        <div class="mt-1.5 text-sm font-medium text-navy-900 leading-relaxed">
+                                            119991, г. Москва, Ленинские горы, д. 1, Главное здание, ауд. 14-08 (пример адреса)
+</div>
+                                    </div>
+                                    <div class="p-4 rounded-xl bg-white border border-slate-200/80">
+                                        <div class="text-xs font-semibold uppercase tracking-wider text-slate-400">Часы работы офиса</div>
+                                        <div class="mt-1.5 text-sm font-medium text-navy-900 leading-relaxed">
+                                            Пн–Пт: 10:00 — 18:00<br/>
+                                            <span class="text-slate-500 font-normal">Сб–Вс: выходные дни</span>
+                                        </div>
+                                    </div>
+                                    <div class="p-4 rounded-xl bg-white border border-slate-200/80">
+                                        <div class="text-xs font-semibold uppercase tracking-wider text-slate-400">Электронная почта</div>
+                                        <div class="mt-1.5 flex items-center justify-between gap-2">
+                                            <a href="mailto:info@program-template.edu.ru" class="text-sm font-semibold text-navy-600 hover:underline break-all">
+                      info@program-template.edu.ru </a>
+                                            <button type="button" id="copy-email-btn" data-copy="info@program-template.edu.ru" class="p-1.5 rounded-lg text-slate-500 hover:text-navy-900 hover:bg-ice-100 transition-colors shrink-0" title="Скопировать email" aria-label="Скопировать электронную почту">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="p-4 rounded-xl bg-white border border-slate-200/80">
+                                        <div class="text-xs font-semibold uppercase tracking-wider text-slate-400">Телефон приёмной</div>
+                                        <div class="mt-1.5 text-sm font-semibold text-navy-900">
+                                            +7 (495) 000-00-00
+</div>
+                                        <div class="text-xs text-slate-500 mt-0.5">доб. 1408 — учебный отдел</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Блок партнёров и быстрой заявки -->
+                        <div class="lg:col-span-5 rounded-2xl bg-navy-900 text-white p-6 sm:p-8 flex flex-col justify-between shadow-academic">
+                            <div>
+                                <span class="text-xs font-bold uppercase tracking-[0.16em] text-gold-400">Научное партнёрство</span>
+                                <h3 class="mt-2 font-serif text-xl sm:text-2xl font-bold">При поддержке научных центров и фондов</h3>
+                                <p class="mt-2.5 text-sm text-blue-100/85 leading-relaxed">
+                Программа реализуется в тесной кооперации с институтами теоретической и математической физики и научными грантовыми фондами. </p>
+                                <!-- Стильные текстовые логотипы-заглушки партнёров -->
+                                <div class="mt-6 grid grid-cols-2 gap-3">
+                                    <div class="px-4 py-3 rounded-xl bg-white/10 border border-white/15 text-center">
+                                        <div class="font-serif font-bold text-sm tracking-wide text-white">ИТМФ</div>
+                                        <div class="text-[11px] text-blue-200 mt-0.5">Институт-партнёр</div>
+                                    </div>
+                                    <div class="px-4 py-3 rounded-xl bg-white/10 border border-white/15 text-center">
+                                        <div class="font-serif font-bold text-sm tracking-wide text-gold-400">ФОНД НАУКИ</div>
+                                        <div class="text-[11px] text-blue-200 mt-0.5">Грантовая поддержка</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-8 pt-6 border-t border-white/15">
+                                <button type="button" data-open-apply class="w-full py-3.5 px-5 rounded-xl bg-gold-500 hover:bg-gold-400 text-navy-950 font-semibold text-sm shadow-sm transition-colors">
+                                    Подать заявку или задать вопрос
+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <!-- ==================== 9. FOOTER ==================== -->
+        <footer class="bg-navy-950 text-slate-300 border-t border-white/10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <div class="grid md:grid-cols-12 gap-8 pb-10 border-b border-white/10">
+                    <div class="md:col-span-5">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center">
+                                <svg class="w-6 h-6" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                    <rect x="4" y="4" width="28" height="28" rx="6" stroke="#c89b3c" stroke-width="1.5"/>
+                                    <ellipse cx="18" cy="18" rx="10" ry="4.5" transform="rotate(-35 18 18)" stroke="#ffffff" stroke-width="1.4"/>
+                                    <ellipse cx="18" cy="18" rx="10" ry="4.5" transform="rotate(35 18 18)" stroke="#93c5fd" stroke-width="1.4"/>
+                                    <circle cx="18" cy="18" r="2.2" fill="#c89b3c"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="font-serif font-bold text-white text-base">ФММП — Академический портал</div>
+                                <div class="text-xs text-slate-400">Фундаментальная математика и математическая физика</div>
+                            </div>
+                        </div>
+                        <p class="mt-4 text-xs text-slate-400 leading-relaxed max-w-md">
+            Шаблон университетской научно-образовательной программы. Вы можете легко заменить название, логотип, состав преподавателей, курсы и ссылки в этом едином HTML-файле. </p>
+                    </div>
+                    <div class="md:col-span-3">
+                        <h4 class="text-xs font-bold uppercase tracking-widest text-gold-400 mb-3">Разделы сайта</h4>
+                        <ul class="space-y-2 text-sm">
+                            <li>
+                                <a href="#about" class="hover:text-white transition-colors">О программе</a>
+                            </li>
+                            <li>
+                                <a href="#tracks" class="hover:text-white transition-colors">Научные направления</a>
+                            </li>
+                            <li>
+                                <a href="#curriculum" class="hover:text-white transition-colors">Учебный план</a>
+                            </li>
+                            <li>
+                                <a href="#news" class="hover:text-white transition-colors">Семинары и новости</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="md:col-span-4">
+                        <h4 class="text-xs font-bold uppercase tracking-widest text-gold-400 mb-3">Абитуриентам и студентам</h4>
+                        <ul class="space-y-2 text-sm">
+                            <li>
+                                <a href="#faculty" class="hover:text-white transition-colors">Преподаватели и научный совет</a>
+                            </li>
+                            <li>
+                                <a href="#admissions" class="hover:text-white transition-colors">Порядок поступления и FAQ</a>
+                            </li>
+                            <li>
+                                <a href="#contacts" class="hover:text-white transition-colors">Контакты учебного офиса</a>
+                            </li>
+                            <li>
+                                <button type="button" data-open-apply class="text-gold-400 hover:text-gold-300 font-medium transition-colors">Форма обратной связи →</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="pt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs text-slate-400">
+                    <div>© 2026 ФММП (университетский шаблон). Все права защищены.</div>
+                    <div class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-slate-300">
+                        Подсказка: отредактируйте массивы данных в блоке <code class="text-gold-400">&lt;script&gt;</code>, чтобы вставить свои курсы, новости и контакты.
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- ==================== МОДАЛЬНОЕ ОКНО: ПОДАТЬ ЗАЯВКУ ==================== -->
+        <div id="apply-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-navy-950/70 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="apply-modal-title">
+            <div class="modal-animate bg-white rounded-2xl max-w-lg w-full shadow-2xl border border-slate-200 overflow-hidden max-h-[92vh] flex flex-col">
+                <div class="px-6 py-5 bg-navy-900 text-white flex items-center justify-between">
+                    <div>
+                        <span class="text-[11px] font-bold uppercase tracking-widest text-gold-400">Приёмная комиссия и учебный офис</span>
+                        <h3 id="apply-modal-title" class="font-serif text-xl font-bold mt-0.5">Подать заявку / Задать вопрос</h3>
+                    </div>
+                    <button type="button" data-close-modal="apply-modal" class="p-2 rounded-xl text-blue-200 hover:text-white hover:bg-white/10 transition-colors" aria-label="Закрыть окно">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="p-6 overflow-y-auto">
+                    <!-- Форма -->
+                    <form id="apply-form" novalidate class="space-y-4">
+                        <div>
+                            <label for="apply-name" class="block text-sm font-medium text-slate-700 mb-1">Имя и фамилия <span class="text-red-500">*</span></label>
+                            <input id="apply-name" name="name" type="text" required placeholder="Например, Иван Смирнов" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-navy-600/30 focus:border-navy-600"/>
+                            <p class="mt-1 text-xs text-red-600 hidden" id="error-name">Пожалуйста, укажите ваше имя (не менее 2 символов).</p>
+                        </div>
+                        <div>
+                            <label for="apply-email" class="block text-sm font-medium text-slate-700 mb-1">Email <span class="text-red-500">*</span></label>
+                            <input id="apply-email" name="email" type="email" required placeholder="ivan.smirnov@example.ru" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-navy-600/30 focus:border-navy-600"/>
+                            <p class="mt-1 text-xs text-red-600 hidden" id="error-email">Введите корректный адрес электронной почты.</p>
+                        </div>
+                        <div>
+                            <label for="apply-status" class="block text-sm font-medium text-slate-700 mb-1">Ваш статус</label>
+                            <select id="apply-status" name="status" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-navy-600/30 focus:border-navy-600">
+                                <option value="Абитуриент">Абитуриент</option>
+                                <option value="Студент">Студент</option>
+                                <option value="Исследователь">Исследователь / Преподаватель</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="apply-message" class="block text-sm font-medium text-slate-700 mb-1">Сообщение или вопрос <span class="text-red-500">*</span></label>
+                            <textarea id="apply-message" name="message" rows="4" required placeholder="Расскажите о ваших интересах или задайте вопрос о поступлении и курсах..." class="w-full px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-navy-600/30 focus:border-navy-600"></textarea>
+                            <p class="mt-1 text-xs text-red-600 hidden" id="error-message">Пожалуйста, напишите сообщение (не менее 10 символов).</p>
+                        </div>
+                        <label class="flex items-start gap-2.5 text-xs text-slate-600 cursor-pointer">
+                            <input id="apply-consent" type="checkbox" checked class="mt-0.5 rounded border-slate-300 text-navy-900 focus:ring-navy-600"/>
+                            <span>Я согласен(а) на обработку указанных контактных данных для получения ответа от учебного офиса программы.</span>
+                        </label>
+                        <p class="text-xs text-red-600 hidden" id="error-consent">Необходимо подтвердить согласие на обработку данных.</p>
+                        <div class="pt-2 flex flex-col sm:flex-row gap-3 justify-end">
+                            <button type="button" data-close-modal="apply-modal" class="px-5 py-2.5 rounded-xl border border-slate-300 text-slate-700 hover:bg-ice-100 text-sm font-medium transition-colors">
+                                Отмена
+</button>
+                            <button type="submit" class="px-6 py-2.5 rounded-xl bg-navy-900 hover:bg-navy-800 text-white text-sm font-semibold shadow-sm transition-colors">
+                                Отправить заявку
+</button>
+                        </div>
+                    </form>
+                    <!-- Экран успешной отправки -->
+                    <div id="apply-success" class="hidden text-center py-6 space-y-4">
+                        <div class="w-14 h-14 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/>
+                            </svg>
+                        </div>
+                        <h4 class="font-serif text-xl font-bold text-navy-900">Заявка успешно отправлена</h4>
+                        <p id="apply-success-text" class="text-sm text-slate-600 max-w-sm mx-auto leading-relaxed">
+            Спасибо за обращение! Куратор программы свяжется с вами по указанной почте в ближайшее время. </p>
+                        <button type="button" id="apply-reset-btn" class="px-6 py-2.5 rounded-xl bg-navy-900 hover:bg-navy-800 text-white text-sm font-semibold transition-colors">
+                            Закрыть
+</button>
+                    </div>
+                </div>
+            </div>
         </div>
-      </section>
-    </main>
-
-    <footer class="footer">
-      <div class="container">
-        <div class="footer__top">
-          <div class="footer__about">
-            <a href="#hero" class="logo" style="color: #f0ebe1">
-              <span class="logo__mark" aria-hidden="true">∫</span>
-              <span class="logo__txt"
-                ><strong>Спецпоток</strong><span>мехмат МГУ</span></span
-              >
-            </a>
-            <p>
-              Углублённая программа механико-математического факультета МГУ
-              имени М. В. Ломоносова.
-            </p>
-          </div>
-          <div>
-            <h4>Разделы</h4>
-            <ul>
-              <li><a href="#about">О спецпотоке</a></li>
-              <li><a href="#team">Преподаватели</a></li>
-              <li><a href="#program">Программа</a></li>
-              <li><a href="#admission">Поступление</a></li>
-            </ul>
-          </div>
-          <!-- <div>
-            <h4>Студентам</h4>
-            <ul>
-              <li><a href="#">Архив листков</a></li>
-              <li><a href="#">Расписание семинаров</a></li>
-              <li><a href="#">Библиотека курса</a></li>
-              <li><a href="#">Выпускники</a></li>
-            </ul>
-          </div> -->
-          <div>
-            <h4>Университет</h4>
-            <ul>
-              <li>
-                <a href="https://www.math.msu.ru" target="_blank" rel="noopener"
-                  >Сайт мехмата ↗</a
-                >
-              </li>
-              <li>
-                <a href="https://cpk.msu.ru" target="_blank" rel="noopener"
-                  >Приёмная комиссия ↗</a
-                >
-              </li>
-              <li>
-                <a href="https://olymp.msu.ru" target="_blank" rel="noopener"
-                  >Олимпиада «Ломоносов» ↗</a
-                >
-              </li>
-              <li>
-                <a href="mailto:specpotok@math.msu.ru">specpotok@math.msu.ru</a>
-              </li>
-            </ul>
-          </div>
+        <!-- ==================== МОДАЛЬНОЕ ОКНО: НОВОСТЬ / СЕМИНАР / ДОКУМЕНТ ==================== -->
+        <div id="detail-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-navy-950/70 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="detail-modal-title">
+            <div class="modal-animate bg-white rounded-2xl max-w-2xl w-full shadow-2xl border border-slate-200 overflow-hidden max-h-[90vh] flex flex-col">
+                <div class="px-6 py-5 bg-ice-100 border-b border-slate-200 flex items-start justify-between gap-4">
+                    <div>
+                        <div id="detail-modal-meta" class="flex flex-wrap items-center gap-2 text-xs font-semibold text-navy-600 mb-1.5"></div>
+                        <h3 id="detail-modal-title" class="font-serif text-xl sm:text-2xl font-bold text-navy-900 leading-snug"></h3>
+                    </div>
+                    <button type="button" data-close-modal="detail-modal" class="p-2 rounded-xl text-slate-500 hover:text-navy-900 hover:bg-slate-200/70 transition-colors shrink-0" aria-label="Закрыть окно">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+                <div id="detail-modal-body" class="p-6 overflow-y-auto space-y-4 text-sm sm:text-base text-slate-700 leading-relaxed"></div>
+                <div id="detail-modal-footer" class="px-6 py-4 bg-ice-50 border-t border-slate-200 flex flex-wrap items-center justify-end gap-3"></div>
+            </div>
         </div>
-        <div class="footer__bot">
-          <span>© 2026 Спецпоток мехмата МГУ. Все права защищены.</span>
-          <span class="mono"
-            >Демонстрационный макет · имена, даты и контакты — примеры</span
-          >
+        <!-- ==================== МОДАЛЬНОЕ ОКНО: БЫСТРЫЙ ПОИСК ==================== -->
+        <div id="search-modal" class="fixed inset-0 z-50 hidden items-start justify-center pt-16 sm:pt-24 p-4 bg-navy-950/70 backdrop-blur-sm" role="dialog" aria-modal="true" aria-label="Быстрый поиск по сайту">
+            <div class="modal-animate bg-white rounded-2xl max-w-xl w-full shadow-2xl border border-slate-200 overflow-hidden">
+                <div class="p-4 border-b border-slate-200 flex items-center gap-3">
+                    <svg class="w-5 h-5 text-slate-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z"/>
+                    </svg>
+                    <input id="global-search-input" type="text" placeholder="Введите название курса, семинара или фамилию преподавателя..." class="w-full text-sm sm:text-base text-slate-800 placeholder:text-slate-400 focus:outline-none"/>
+                    <button type="button" data-close-modal="search-modal" class="px-2.5 py-1 rounded-lg bg-ice-100 text-xs font-semibold text-slate-500 hover:text-navy-900">Esc</button>
+                </div>
+                <div id="global-search-results" class="max-h-80 overflow-y-auto divide-y divide-slate-100 p-2">
+                    <div class="p-6 text-center text-sm text-slate-400">Начните вводить запрос для быстрого перехода к курсам, новостям или преподавателям.</div>
+                </div>
+            </div>
         </div>
-      </div>
-    </footer>
-
-    <div
-      class="modal"
-      id="modal"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="modalName"
-    >
-      <div class="modal__bg" data-close></div>
-      <div class="modal__win">
-        <button class="modal__close" data-close aria-label="Закрыть">×</button>
-        <div id="modalContent"></div>
-      </div>
-    </div>
-
-    <button class="top" id="toTop" aria-label="Наверх">↑</button>
-<!-- 
-    <script src="data/people.js"></script>
-    <script src="data/program.js"></script>
-    <script src="data/faq.js"></script> -->
-    <script src="script.js"></script>
-  </body>
+        <!-- ==================== TOAST-УВЕДОМЛЕНИЕ ==================== -->
+        <div id="toast" role="status" aria-live="polite" class="fixed bottom-5 right-5 z-50 max-w-sm bg-navy-900 text-white px-5 py-3.5 rounded-xl shadow-xl border border-white/10 flex items-center gap-3 transform translate-y-24 opacity-0 pointer-events-none transition-all duration-300">
+            <span class="w-2.5 h-2.5 rounded-full bg-gold-400 shrink-0"></span>
+            <span id="toast-message" class="text-sm font-medium"></span>
+        </div>
+        <!-- ==================== JAVASCRIPT: ДАННЫЕ И ИНТЕРАКТИВНОСТЬ ==================== -->
+        <script src="data/data.js"></script>
+        <script src="script.js"></script>
+    </body>
 </html>
