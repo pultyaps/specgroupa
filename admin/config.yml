@@ -1,24 +1,26 @@
 backend:
   name: github
-  repo: pultyaps/specgroupa
+  repo: ваш-логин/specpotok-site
   branch: main
-  auth_type: pkce
-  app_id: Ov23lijgnGwJG5F85WlY
 
-media_folder: "media"
-media_library:
-  name: "file-system"
-  config:
-    media_folder: "media"
-    public_folder: "media"
+media_folder: "images"
+public_folder: "/images"
 
 collections:
-  - name: "pages"
-    label: "Страницы"
-    folder: "content/pages"
-    create: true
-    slug: "{{slug}}"
-    fields:
-      - { label: "Заголовок", name: "title", widget: "string" }
-      - { label: "URL", name: "url", widget: "string" }
-      - { label: "Содержимое", name: "body", widget: "markdown" }
+  - name: "people"
+    label: "Преподаватели"
+    files:
+      - name: "people"
+        label: "Список преподавателей"
+        file: "data/people.json"
+        fields:
+          - name: "people"
+            label: "Преподаватели"
+            widget: "list"
+            fields:
+              - { label: "ФИО", name: "name", widget: "string" }
+              - { label: "Роль", name: "role", widget: "string" }
+              - { label: "Степень", name: "degree", widget: "string" }
+              - { label: "Кафедра", name: "chair", widget: "string" }
+              - { label: "О преподавателе", name: "bio", widget: "text" }
+              - { label: "Email", name: "email", widget: "string" }
