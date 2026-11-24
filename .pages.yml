@@ -1,32 +1,35 @@
-media: images
+media:
+  input: images
+  output: /images
 
 content:
-  - name: people
+  - name: faculty
     label: Преподаватели
     type: file
-    path: data/people.json
+    path: data/faculty.json
     format: json
+    list: true
+
     fields:
-      - name: people
-        label: Преподаватели
-        type: collection
+      - name: initials
+        label: Инициалы
+        type: string
+        required: true
+
+      - name: name
+        label: ФИО
+        type: string
+        required: true
+
+      - name: title
+        label: Должность и учёная степень
+        type: string
+
+      - name: tags
+        label: Научные направления
+        type: string
         list: true
-        fields:
-          - name: name
-            label: ФИО
-            type: string
-          - name: role
-            label: Роль
-            type: string
-          - name: degree
-            label: Степень
-            type: string
-          - name: chair
-            label: Кафедра
-            type: string
-          - name: bio
-            label: О преподавателе
-            type: text
-          - name: email
-            label: Email
-            type: string
+
+      - name: accent
+        label: Цвет карточки
+        type: string
