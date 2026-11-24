@@ -16,8 +16,12 @@ content:
         type: string
         required: true
 
-      - name: title
-        label: Должность и учёная степень
+      - name: role
+        label: Должность
+        type: string
+
+      - name: degree
+        label: Ученая степень
         type: string
 
       - name: chair
