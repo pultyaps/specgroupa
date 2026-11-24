@@ -1,0 +1,32 @@
+media: images
+
+content:
+  - name: people
+    label: Преподаватели
+    type: file
+    path: data/people.json
+    format: json
+    fields:
+      - name: people
+        label: Преподаватели
+        type: collection
+        list: true
+        fields:
+          - name: name
+            label: ФИО
+            type: string
+          - name: role
+            label: Роль
+            type: string
+          - name: degree
+            label: Степень
+            type: string
+          - name: chair
+            label: Кафедра
+            type: string
+          - name: bio
+            label: О преподавателе
+            type: text
+          - name: email
+            label: Email
+            type: string
