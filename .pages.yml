@@ -3,19 +3,14 @@ media:
   output: /images
 
 content:
-  - name: faculty
+  - name: people
     label: Преподаватели
     type: file
-    path: data/faculty.json
+    path: data/people.json
     format: json
     list: true
 
     fields:
-      - name: initials
-        label: Инициалы
-        type: string
-        required: true
-
       - name: name
         label: ФИО
         type: string
@@ -25,11 +20,11 @@ content:
         label: Должность и учёная степень
         type: string
 
+      - name: chair
+        label: Кафедра
+        type: string
+
       - name: tags
         label: Научные направления
         type: string
         list: true
-
-      - name: accent
-        label: Цвет карточки
-        type: string
