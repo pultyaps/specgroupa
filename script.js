@@ -1,3 +1,28 @@
+let PEOPLE = [];
+let PROGRAM = [];
+let FAQ = [];
+
+async function loadData() {
+  const [peopleRes, programRes, faqRes] = await Promise.all([
+    fetch('data/people.json'),
+    fetch('data/program.json'),
+    fetch('data/faq.json')
+  ]);
+  
+  const peopleData = await peopleRes.json();
+  const programData = await programRes.json();
+  const faqData = await faqRes.json();
+  
+  PEOPLE = peopleData.people;
+  PROGRAM = programData.program;
+  FAQ = faqData.faq.map(item => [item.question, item.answer]);
+  
+  renderPeople();
+  renderFAQ();
+}
+
+document.addEventListener('DOMContentLoaded', loadData);
+
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
