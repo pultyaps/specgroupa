@@ -4,3 +4,21 @@ backend:
   branch: main
   auth_type: pkce
   app_id: Ov23lijgnGwJG5F85WlY
+
+media_folder: "media"
+media_library:
+  name: "file-system"
+  config:
+    media_folder: "media"
+    public_folder: "media"
+
+collections:
+  - name: "pages"
+    label: "Страницы"
+    folder: "content/pages"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Заголовок", name: "title", widget: "string" }
+      - { label: "URL", name: "url", widget: "string" }
+      - { label: "Содержимое", name: "body", widget: "markdown" }
