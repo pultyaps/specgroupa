@@ -1,3 +1,45 @@
 backend:
   name: turbo-github
   turbo_site_id: e3a08182-dbbb-47fe-b1b1-0767b758b286
+
+media_folder: images
+public_folder: /images
+
+collections:
+  - name: people
+    label: Преподаватели
+    files:
+      - name: people
+        label: Преподаватели
+        file: data/people.json
+        fields:
+          - name: people
+            label: Преподаватели
+            widget: list
+            fields:
+              - name: name
+                label: ФИО
+                widget: string
+                required: true
+              - name: role
+                label: Должность
+                widget: string
+              - name: degree
+                label: Ученая степень
+                widget: string
+              - name: chair
+                label: Кафедра
+                widget: string
+              - name: bio
+                label: Описание
+                widget: string
+              - name: email
+                label: Электронная почта
+                widget: string
+              - name: tags
+                label: Научные направления
+                widget: list
+                field:
+                  name: tag
+                  label: Направление
+                  widget: string
